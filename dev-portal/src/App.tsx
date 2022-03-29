@@ -1,25 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+// import useMediaQuery from '@mui/material/useMediaQuery';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { RootView } from './view/RootView';
 
-function App() {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 1
+    }
+  }
+});
+
+
+const App = () => {
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  // const theme = React.useMemo(
+  //   () =>
+  //     createTheme({
+  //       palette: {
+  //         mode: prefersDarkMode ? 'dark' : 'light'
+  //       },
+  //     }),
+  //   [prefersDarkMode],
+  // );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <ThemeProvider theme={theme}>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/orgs' element={<Navigate to='/' replace />} />
+          <Route path='/orgs/:orgId/projects' element={<Navigate replace to='/orgs/:orgId' />} />
+          <Route path='/orgs/:orgId/settings/overview' element={<Navigate replace to='/orgs/:orgId/settings' />} />
+          <Route path='/orgs/:orgId/projects/:projectId/overview' element={<Navigate replace to='/orgs/:orgId/projects/:projectId' />} />
+          <Route path='/orgs/:orgId/projects/:projectId/settings/overview' element={<Navigate replace to='/orgs/:orgId/projects/:projectId/settings' />} />
+          <Route path='/orgs/:orgId/projects/:projectId/components/:itemId/tasks' element={<Navigate replace to='/orgs/:orgId/projects/:projectId/components/:itemId' />} />
+          <Route path='/*' element={<RootView />} />
+        </Routes>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+    </QueryClientProvider>
+    // </ThemeProvider>
   );
 }
 

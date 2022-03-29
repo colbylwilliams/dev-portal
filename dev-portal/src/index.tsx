@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { auth } from './API';
+import { MsalProvider } from '@azure/msal-react';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MsalProvider instance={auth.clientApplication}>
+      <App />
+    </MsalProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
