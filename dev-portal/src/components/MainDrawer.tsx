@@ -20,35 +20,42 @@ import Computer from '@mui/icons-material/Computer';
 import Code from '@mui/icons-material/Code';
 import Cloud from '@mui/icons-material/Cloud';
 import Group from '@mui/icons-material/Group';
+import { useNavigate } from 'react-router-dom';
 
 
 const drawerWidth = 240;
 
 const sections = [
     [
-        { label: 'New...', icon: <AddCircle /> }
+        { label: 'New...', icon: <AddCircle />, href: '/' }
     ],
     [
-        { label: 'Dashboard', icon: <Dashboard /> }
+        { label: 'Dashboard', icon: <Dashboard />, href: '/' }
     ],
     [
-        { label: 'Projects', icon: <Account /> },
-        { label: 'My teams', icon: <Group /> }
+        { label: 'Projects', icon: <Account />, href: '/projects' },
+        { label: 'My teams', icon: <Group />, href: '/' }
     ],
     [
-        { label: 'Dev boxes', icon: <Computer /> },
-        { label: 'Code spaces', icon: <Code /> },
-        { label: 'Environments', icon: <Cloud /> }
+        { label: 'Dev boxes', icon: <Computer />, href: '/devboxes' },
+        { label: 'Source code', icon: <Code />, href: '/sourcecode' },
+        { label: 'Environments', icon: <Cloud />, href: '/' }
     ],
     [
-        { label: 'Docs', icon: <LibraryBooks /> },
-        { label: 'APIs', icon: <Extension /> }
+        { label: 'Docs', icon: <LibraryBooks />, href: '/' },
+        { label: 'APIs', icon: <Extension />, href: '/' }
     ]
 ]
 
 export interface IMainDrawerProps { }
 
+
 const MainDrawer: React.FC<IMainDrawerProps> = (props) => {
+
+
+    // const r = useLanguages('microsoft', 'TeamCloud');
+    // const r = useLanguages('colbylwilliams', 'dev-portal');
+    const navigate = useNavigate();
 
     return (
         <Drawer
@@ -64,8 +71,8 @@ const MainDrawer: React.FC<IMainDrawerProps> = (props) => {
                     <div key={index}>
                         <List>
                             {section.map((item, _) => (
-                                <ListItem button key={item.label}>
-                                    <ListItemIcon>{item.icon}</ListItemIcon>
+                                <ListItem button key={item.label} onClick={() => navigate(item.href)}>
+                                    <ListItemIcon sx={{ minWidth: '46px' }}>{item.icon}</ListItemIcon>
                                     <ListItemText primary={item.label} />
                                 </ListItem>
                             ))}

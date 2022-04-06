@@ -5,6 +5,16 @@ import { Configuration, InteractionRequiredAuthError, PublicClientApplication } 
 import { AccessToken, TokenCredential } from '@azure/core-auth'
 import { AuthenticationProvider, AuthenticationProviderOptions } from "@microsoft/microsoft-graph-client";
 
+export const getGitHubToken = () => {
+    if (process.env.NODE_ENV !== 'production') {
+        if (!process.env.REACT_APP_GITHUB_TOKEN) throw new Error('Must set env variable $REACT_APP_GITHUB_TOKEN');
+        return process.env.REACT_APP_GITHUB_TOKEN;
+    }
+
+    return '__REACT_APP_GITHUB_TOKEN__';
+};
+
+
 export class Auth implements TokenCredential, AuthenticationProvider {
 
     _getClientId = () => {
@@ -12,7 +22,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
             if (!process.env.REACT_APP_MSAL_CLIENT_ID) throw new Error('Must set env variable $REACT_APP_MSAL_CLIENT_ID');
             return process.env.REACT_APP_MSAL_CLIENT_ID;
         }
-        
+
         return '__REACT_APP_MSAL_CLIENT_ID__';
     };
 
@@ -21,7 +31,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
             if (!process.env.REACT_APP_MSAL_TENANT_ID) throw new Error('Must set env variable $REACT_APP_MSAL_TENANT_ID');
             return 'https://login.microsoftonline.com/' + process.env.REACT_APP_MSAL_TENANT_ID;
         }
-        
+
         return 'https://login.microsoftonline.com/__REACT_APP_MSAL_TENANT_ID__';
     };
 
@@ -30,7 +40,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
             if (!process.env.REACT_APP_MSAL_SCOPE) throw new Error('Must set env variable REACT_APP_MSAL_SCOPE');
             return process.env.REACT_APP_MSAL_SCOPE;
         }
-        
+
         return '__REACT_APP_MSAL_SCOPE__';
     };
 

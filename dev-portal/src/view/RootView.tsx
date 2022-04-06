@@ -33,6 +33,11 @@ import { AuthenticatedTemplate, MsalAuthenticationResult, useMsalAuthentication 
 import { InteractionType } from '@azure/msal-browser';
 import { auth } from '../API';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { Route, Routes } from 'react-router-dom';
+import { RepoView } from '../components/github/RepoView';
+import { ProjectView } from '../components/msdev/ProjectView';
+import { DevBoxesView } from '../components/msdev/DevBoxesView';
+import { ProjectsView } from '../components/msdev/ProjectsView';
 
 export interface IRootViewProps { }
 
@@ -65,21 +70,7 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
 
     // const [drawerOpen, setDrawerOpen] = React.useState(true);
 
-    const projects = [
-        {
-            displayName: 'Project Alpha',
-            description: 'This is the Alpha project description',
-        }, {
-            displayName: 'Project Beta',
-            description: 'This is the Beta project description',
-        }, {
-            displayName: 'Project Kappa',
-            description: 'This is the Kappa project description',
-        }, {
-            displayName: 'Project Gamma',
-            description: 'This is the Gamma project description',
-        }
-    ];
+
 
     return (
         <AuthenticatedTemplate>
@@ -88,46 +79,15 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
                     <CssBaseline />
                     <MainAppBar />
                     <MainDrawer />
-                    <Box component='main' sx={{ flexGrow: 1, px: 6, pb: 6, pt: 4 }}>
-                        <Toolbar />
-                        <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                            Projects
-                        </Typography>
-                        <Grid container spacing={4} direction='row' justifyContent='center'>
-                            {projects.map((project) => (
-                                <Grid item xs={12} sm={6} md={4} lg={3} key={project.displayName}>
-                                    <Card elevation={3} sx={{ minWidth: 275 }}>
-                                        <CardHeader title={project.displayName} subheader={project.description} />
-                                        <CardContent>
-                                            <Typography variant='overline' display='block' gutterBottom>
-                                                Description
-                                            </Typography>
-                                            <Typography variant='subtitle2' gutterBottom component='div'>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            </Typography>
-                                            <Typography variant='subtitle2' gutterBottom component='div'>
-                                                Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet.
-                                            </Typography>
-
-                                            <Typography variant='overline' display='block' gutterBottom pt='28px'>
-                                                Tags
-                                            </Typography>
-
-                                            <Stack direction='row' spacing={1}>
-                                                <Chip label='azure' color='primary' size='small' component='a' href='#basic-chip' clickable />
-                                                <Chip label='project' color='success' size='small' component='a' href='#basic-chip' clickable />
-                                            </Stack>
-
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button size='small'>Learn More</Button>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-
-                    </Box>
+                    <Routes>
+                        <Route path='/sourcecode' element={<RepoView org='microsoft' repo='TeamCloud' />} />
+                        <Route path='/devboxes' element={<DevBoxesView />} />
+                        <Route path='/projects' element={<ProjectsView />} />
+                        <Route path='/projects/:projectId' element={<ProjectView />} />
+                        <Route path='/*' element={
+                            <></>
+                        } />
+                    </Routes>
                 </Box>
             </ThemeProvider>
         </AuthenticatedTemplate>

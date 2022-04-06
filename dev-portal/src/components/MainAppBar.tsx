@@ -14,9 +14,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import colby from '../img/colby.jpg'
 import { ReactComponent as ContosoLogo } from '../img/contoso_logo.svg'
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 const userSettings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -67,6 +69,7 @@ export interface IMainAppBarProps { }
 
 const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
 
+    const [org, setOrg] = React.useState('contoso');
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -75,6 +78,10 @@ const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleOrgChange = (event: SelectChangeEvent) => {
+        setOrg(event.target.value as string);
     };
 
     return (
@@ -94,7 +101,19 @@ const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
                     />
                 </Search>
 
-                <Box sx={{ flexGrow: 0 }}>
+                <Select
+                    value={org}
+                    sx={{ border: 'none', '& fieldset': { border: 'none' } }}
+                    SelectDisplayProps={{ style: { border: 'none' } }}
+                    MenuProps={{ style: { border: 'none' } }}
+                    // label="Age"
+                    onChange={handleOrgChange}
+                    IconComponent={KeyboardArrowDownIcon}>
+                    <MenuItem value={'contoso'}>Contoso</MenuItem>
+                    <MenuItem value={'fabrikam'}>Fabrikam</MenuItem>
+                </Select>
+
+                <Box sx={{ paddingLeft: '12px', flexGrow: 0 }}>
                     <Tooltip title='Open settings'>
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Avatar alt='Colby Williams' src={colby} />
