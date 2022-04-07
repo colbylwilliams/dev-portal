@@ -56,7 +56,6 @@ export const ProjectView: React.FunctionComponent<IProjectViewProps> = (props) =
                 <Tab value='Overview' label='Overview' />
                 <Tab value='Source Code' label='Source Code' />
                 <Tab value='Dev Boxes' label='Dev Boxes' />
-                <Tab value='Codespaces' label='Codespaces' />
                 <Tab value='Environments' label='Environments' />
                 <Tab value='Workflows' label='Workflows' />
                 <Tab value='Team' label='Team' />

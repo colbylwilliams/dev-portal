@@ -18,8 +18,8 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import CssBaseline from '@mui/material/CssBaseline';
-import MainAppBar from '../components/MainAppBar';
-import MainDrawer from '../components/MainDrawer';
+import MainAppBar from './MainAppBar';
+import MainDrawer from './MainDrawer';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
@@ -34,10 +34,13 @@ import { InteractionType } from '@azure/msal-browser';
 import { auth } from '../API';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Route, Routes } from 'react-router-dom';
-import { RepoView } from '../components/github/RepoView';
-import { ProjectView } from '../components/msdev/ProjectView';
-import { DevBoxesView } from '../components/msdev/DevBoxesView';
-import { ProjectsView } from '../components/msdev/ProjectsView';
+import { RepoView } from './github/RepoView';
+import { ProjectView } from './msdev/ProjectView';
+import { DevBoxesView } from './msdev/DevBoxesView';
+import { ProjectsView } from './msdev/ProjectsView';
+import { ComponentsView } from './msdev/ComponentsView';
+import { DashboardView } from './DashboardView';
+import { TeamsView } from './github/TeamsView';
 
 export interface IRootViewProps { }
 
@@ -73,23 +76,28 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
 
 
     return (
-        <AuthenticatedTemplate>
-            <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+            <AuthenticatedTemplate>
                 <Box sx={{ display: 'flex' }}>
                     <CssBaseline />
                     <MainAppBar />
                     <MainDrawer />
                     <Routes>
-                        <Route path='/sourcecode' element={<RepoView org='microsoft' repo='TeamCloud' />} />
-                        <Route path='/devboxes' element={<DevBoxesView />} />
-                        <Route path='/projects' element={<ProjectsView />} />
-                        <Route path='/projects/:projectId' element={<ProjectView />} />
+                        <Route path='/orgs/:orgId' element={<DashboardView {...{}} />} />
+                        <Route path='/orgs/:orgId/devboxes' element={<DevBoxesView {...{}} />} />
+                        {/* <Route path='/orgs/:orgId/environments' element={<ComponentsView {...{}} />} /> */}
+                        <Route path='/orgs/:orgId/sourcecode' element={<RepoView org='microsoft' repo='TeamCloud' {...{}} />} />
+                        <Route path='/orgs/:orgId/teams' element={<TeamsView {...{}} />} />
+                        <Route path='/orgs/:orgId/projects' element={<ProjectsView {...{}} />} />
+                        <Route path='/orgs/:orgId/projects/:projectId' element={<ProjectView {...{}} />} />
+                        <Route path='/orgs/:orgId/projects/:projectId/environments' element={<ComponentsView {...{}} />} />
+
                         <Route path='/*' element={
                             <></>
                         } />
                     </Routes>
                 </Box>
-            </ThemeProvider>
-        </AuthenticatedTemplate>
+            </AuthenticatedTemplate>
+        </ThemeProvider>
     );
 }

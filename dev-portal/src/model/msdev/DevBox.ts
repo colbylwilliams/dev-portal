@@ -39,14 +39,14 @@ export const DefaultDevBoxes: DevBox[] = [
         name: 'Back end dev box',
         project: 'Project Alpha',
         spec: DefaultDevBoxSpec,
-        state: 'Running',
+        state: 'Starting',
     },
     {
         id: '44d7711b-4c8e-484e-b329-4bea67ad679d',
         name: 'Testing dev box',
         project: 'Project Alpha',
         spec: DefaultDevBoxSpec,
-        state: 'Running',
+        state: 'Stopped',
     },
     {
         id: '633e474d-61aa-47d8-9689-59c4b435e7bd',
@@ -60,14 +60,14 @@ export const DefaultDevBoxes: DevBox[] = [
         name: 'Back end dev box',
         project: 'Project Gamma',
         spec: DefaultDevBoxSpec,
-        state: 'Running',
+        state: 'Starting',
     },
     {
         id: 'b6cf9e75-6472-434d-bef1-a1ee307fd12f',
         name: 'Testing dev box',
         project: 'Project Gamma',
         spec: DefaultDevBoxSpec,
-        state: 'Running',
+        state: 'Stopped',
     },
     {
         id: '0c695888-9b6c-4946-b512-9a9d3c51cf45',
@@ -81,13 +81,13 @@ export const DefaultDevBoxes: DevBox[] = [
         name: 'Back end dev box',
         project: 'Project Kappa',
         spec: DefaultDevBoxSpec,
-        state: 'Running',
+        state: 'Starting',
     },
     {
         id: '217d8641-6f11-44be-b0be-b846ca3d3a9b',
         name: 'Testing dev box',
         project: 'Project Kappa',
         spec: DefaultDevBoxSpec,
-        state: 'Running',
+        state: 'Stopped',
     }
 ]

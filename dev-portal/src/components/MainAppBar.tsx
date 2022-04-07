@@ -19,7 +19,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import colby from '../img/colby.jpg'
 import { ReactComponent as ContosoLogo } from '../img/contoso_logo.svg'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useLocation } from 'react-router-dom';
 
+const drawerWidth = 240;
 
 const userSettings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -30,10 +32,11 @@ const Search = styled('div')(({ theme }) => ({
     '&:hover': {
         backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
+    marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
+        marginLeft: theme.spacing(3),
         width: 'auto',
     },
 }));
@@ -50,24 +53,26 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
+    lineHeight: 1,
+    width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '14ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
+        // [theme.breakpoints.up('md')]: {
+        //     width: '20ch',
+        // },
     },
 }));
+
 
 export interface IMainAppBarProps { }
 
 const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
+
+    const { pathname } = useLocation();
 
     const [org, setOrg] = React.useState('contoso');
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -85,33 +90,47 @@ const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
     };
 
     return (
-        <AppBar position='fixed' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-
+        // <AppBar position='fixed' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AppBar
+            position="fixed"
+            sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}>
             <Toolbar disableGutters sx={{ paddingLeft: '14px', paddingRight: '14px' }}>
 
-                <ContosoLogo height='36px' width='auto' style={{ flexGrow: 0, display: 'flex', marginRight: 'auto', width: 'inherit', height: 'inherit' }} />
+                {/* <ContosoLogo height='36px' width='172px' style={{ width: 'inherit', height: 'inherit' }} /> */}
 
-                <Search sx={{ mx: 2 }}>
-                    <SearchIconWrapper>
-                        <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                        placeholder='Search…'
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
-                </Search>
+                {/* <Typography>
+                    Dev Boxes
+                </Typography> */}
 
-                <Select
-                    value={org}
-                    sx={{ border: 'none', '& fieldset': { border: 'none' } }}
-                    SelectDisplayProps={{ style: { border: 'none' } }}
-                    MenuProps={{ style: { border: 'none' } }}
-                    // label="Age"
-                    onChange={handleOrgChange}
-                    IconComponent={KeyboardArrowDownIcon}>
-                    <MenuItem value={'contoso'}>Contoso</MenuItem>
-                    <MenuItem value={'fabrikam'}>Fabrikam</MenuItem>
-                </Select>
+
+                <Box sx={{ flexGrow: 1 }} />
+                {pathname !== '/orgs/contoso' && (
+
+                    <Search sx={{ flexGrow: 1, mx: 2 }}>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder='Search…'
+                            inputProps={{ 'aria-label': 'search' }} />
+                    </Search>
+                )}
+                <Box sx={{ flexGrow: 1 }} />
+
+                <Box minWidth='116px' textAlign='end'>
+
+                    <Select
+                        value={org}
+                        sx={{ border: 'none', '& fieldset': { border: 'none' } }}
+                        SelectDisplayProps={{ style: { border: 'none' } }}
+                        MenuProps={{ style: { border: 'none' } }}
+                        // label="Age"
+                        onChange={handleOrgChange}
+                        IconComponent={KeyboardArrowDownIcon}>
+                        <MenuItem value={'contoso'}>Contoso</MenuItem>
+                        <MenuItem value={'fabrikam'}>Fabrikam</MenuItem>
+                    </Select>
+                </Box>
 
                 <Box sx={{ paddingLeft: '12px', flexGrow: 0 }}>
                     <Tooltip title='Open settings'>

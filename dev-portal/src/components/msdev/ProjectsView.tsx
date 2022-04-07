@@ -15,6 +15,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOrg } from '../../hooks/teamcloud';
 
 export interface IProjectsViewProps {
 
@@ -41,6 +42,8 @@ const projects = [
 ];
 
 export const ProjectsView: React.FunctionComponent<IProjectsViewProps> = (props) => {
+
+    const { data: org } = useOrg();
 
     const navigate = useNavigate();
 
@@ -80,7 +83,7 @@ export const ProjectsView: React.FunctionComponent<IProjectsViewProps> = (props)
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Button size='small' onClick={() => navigate(`/projects/${project.slug}`)}>Learn More</Button>
+                                <Button size='small' onClick={() => navigate(`/orgs/${org?.slug}/projects/${project.slug}`)}>Learn More</Button>
                             </CardActions>
                         </Card>
                     </Grid>

@@ -17,15 +17,6 @@ import { DevBox } from '../../model/msdev/DevBox';
 import windows11 from '../../img/windows11.jpg'
 import { ReactComponent as WindowsLogo } from '../../img/windows_info.svg'
 
-import CardMedia from '@mui/material/CardMedia';
-import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import MemoryIcon from '@mui/icons-material/Memory';
-import StorageIcon from '@mui/icons-material/Storage';
-import SelectAllIcon from '@mui/icons-material/SelectAll';
-import TableRowsIcon from '@mui/icons-material/TableRows';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import SvgIcon from '@mui/material/SvgIcon'
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -33,7 +24,18 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import StopIcon from '@mui/icons-material/StopOutlined';
+import StartIcon from '@mui/icons-material/PlayArrow';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MemoryIcon from '@mui/icons-material/Memory';
+import StorageIcon from '@mui/icons-material/Storage';
+import SelectAllIcon from '@mui/icons-material/SelectAll';
+import TableRowsIcon from '@mui/icons-material/TableRows';
+
+import CardMedia from '@mui/material/CardMedia';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 import ListItemText from '@mui/material/ListItemText';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -44,8 +46,10 @@ import Popper from '@mui/material/Popper';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import { useTheme } from '@mui/material/styles';
+import { Theme, useTheme } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
+
+import { getDevBoxBrowserUrl } from '../../API'
 
 export interface IDevBoxCardProps {
     devbox: DevBox;
@@ -53,9 +57,31 @@ export interface IDevBoxCardProps {
 
 // const options = ['Open in browser', 'Download RDP client'];
 
+const getStateColor = (theme: Theme, state?: string) => {
+    switch (state?.toLowerCase()) {
+        case 'running': return theme.palette.success.main;
+        case 'starting': return theme.palette.info.main;
+        case 'stopping': return theme.palette.warning.main;
+        case 'stopped': return theme.palette.error.main;
+    };
+    return theme.palette.text.primary;
+};
+
+const getStateText = (state?: string) => {
+    switch (state?.toLowerCase()) {
+        case 'running': return 'Running';
+        case 'starting': return 'Starting...';
+        case 'stopping': return 'Stopping...';
+        case 'stopped': return 'Stopped';
+    };
+    return undefined;
+}
+
 export const DevBoxCard: React.FunctionComponent<IDevBoxCardProps> = (props) => {
 
     const { devbox } = props;
+
+    const devBoxBrowserUrl = getDevBoxBrowserUrl();
 
     const theme = useTheme();
 
@@ -85,11 +111,9 @@ export const DevBoxCard: React.FunctionComponent<IDevBoxCardProps> = (props) => 
         <Card>
             <CardMedia component='img' src={windows11} alt='Windows 11' height='200' />
             <CardHeader
-                action={
-                    <IconButton onClick={handleMenuClick} aria-label='settings'>
-                        <MoreVertIcon />
-                    </IconButton>
-                }
+                action={<IconButton onClick={handleMenuClick} aria-label='settings'>
+                    <MoreVertIcon />
+                </IconButton>}
                 title={(<strong>{devbox.name}</strong>)}
                 subheader={(<strong>{devbox.project}</strong>)} />
             <CardContent sx={{ padding: theme.spacing(0, 2) }}>
@@ -120,16 +144,17 @@ export const DevBoxCard: React.FunctionComponent<IDevBoxCardProps> = (props) => 
                     </ListItem>
                 </List>
 
-                <Typography variant='body2' display='block' gutterBottom py={theme.spacing(2)}>
-                    {devbox.state}
+                <Typography color={getStateColor(theme, devbox.state)} variant='body1' display='block' gutterBottom py={theme.spacing(2)}>
+                    {getStateText(devbox.state)}
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end', paddingBottom: theme.spacing(2) }}>
-                <ButtonGroup color='inherit' variant='outlined' size='small'>
-                    <Button startIcon={<OpenInNewIcon />}>
-                        Open in browser
+                <ButtonGroup color='inherit' variant='outlined' >
+                    <Button href={devBoxBrowserUrl} target='_blank' rel='noopener noreferrer'
+                        startIcon={devbox.state.toLowerCase() === 'stopped' ? <StartIcon /> : <OpenInNewIcon />}>
+                        {devbox.state.toLowerCase() === 'stopped' ? 'Start Dev Box' : 'Open in browser'}
                     </Button>
-                    <Button size='small' onClick={handlePopoverClick}>
+                    <Button onClick={handlePopoverClick}>
                         {/* <ArrowDropDownIcon /> */}
                         <KeyboardArrowDownIcon />
                     </Button>
@@ -138,17 +163,16 @@ export const DevBoxCard: React.FunctionComponent<IDevBoxCardProps> = (props) => 
                     open={menuOpen}
                     anchorEl={menuAnchorEl}
                     onClose={handleMenuClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}>
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                    transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
                     <MenuItem onClick={handleMenuClose}>
-                        <StopIcon sx={{ marginRight: theme.spacing(1) }} fontSize='medium' color='info' />
-                        Stop
+                        {devbox.state.toLowerCase() === 'stopped' ?
+                            <StartIcon sx={{ marginRight: theme.spacing(1) }} fontSize='medium' color='info' /> :
+                            <StopIcon sx={{ marginRight: theme.spacing(1) }} fontSize='medium' color='info' />
+                        }
+                        {/* <StopIcon sx={{ marginRight: theme.spacing(1) }} fontSize='medium' color='info' /> */}
+                        {devbox.state.toLowerCase() === 'stopped' ? 'Start' : 'Stop'}
+                        {/* Stop */}
                     </MenuItem>
                     <MenuItem onClick={handleMenuClose}>
                         <DeleteIcon sx={{ marginRight: theme.spacing(1) }} fontSize='medium' color='info' />
@@ -159,15 +183,9 @@ export const DevBoxCard: React.FunctionComponent<IDevBoxCardProps> = (props) => 
                     open={popoverOpen}
                     anchorEl={popoverAnchorEl}
                     onClose={handlePopoverClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}>
-                    <Button size='small' color='inherit' sx={{ padding: theme.spacing(1, 2) }} startIcon={<DownloadIcon color='info' />}>
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
+                    transformOrigin={{ vertical: 'top', horizontal: 'right', }}>
+                    <Button color='inherit' sx={{ padding: theme.spacing(1, 2) }} startIcon={<DownloadIcon color='info' />}>
                         Download RDP client
                     </Button>
                 </Popover>
