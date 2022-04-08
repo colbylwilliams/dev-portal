@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import React, { } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
@@ -8,7 +9,6 @@ import Divider from '@mui/material/Divider';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
-import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm'
 import { useReadme } from '../../hooks/github';
@@ -89,7 +89,7 @@ const Readme = styled(ReactMarkdown)(t => ({
     },
 }));
 
-export const ReadmeCard: React.FunctionComponent<IReadmeCardProps> = (props) => {
+export const ReadmeCard: React.FC<IReadmeCardProps> = (props) => {
 
     const hostname = 'github.com';
 
@@ -124,7 +124,7 @@ export const ReadmeCard: React.FunctionComponent<IReadmeCardProps> = (props) => 
                     <Readme remarkPlugins={[gfm]}>
                         {b64DecodeUnicode(readme.content)
                             .replace(
-                                /\[([^\[\]]*)\]\((?!https?:\/\/)(.*?)(\.png|\.jpg|\.jpeg|\.gif|\.webp)(.*)\)/gim,
+                                /\[([^[\]]*)\]\((?!https?:\/\/)(.*?)(\.png|\.jpg|\.jpeg|\.gif|\.webp)(.*)\)/gim,
                                 '[$1]' +
                                 `(//${hostname}/${org}/${repo}/raw/${getDefaultBranch(
                                     readme.url,
@@ -132,11 +132,11 @@ export const ReadmeCard: React.FunctionComponent<IReadmeCardProps> = (props) => 
                                 '$2$3$4)',
                             )
                             .replace(
-                                /\[([^\[\]]*)\]\((?!https?:\/\/)docs\/(.*?)(\.md)\)/gim,
+                                /\[([^[\]]*)\]\((?!https?:\/\/)docs\/(.*?)(\.md)\)/gim,
                                 '[$1](docs/$2/)',
                             )
                             .replace(
-                                /\[([^\[\]]*)\]\((?!https?:\/\/)(.*?)(\.md)\)/gim,
+                                /\[([^[\]]*)\]\((?!https?:\/\/)(.*?)(\.md)\)/gim,
                                 '[$1]' +
                                 `(//${hostname}/${org}/${repo}/blob/${getDefaultBranch(
                                     readme.url,
@@ -144,7 +144,6 @@ export const ReadmeCard: React.FunctionComponent<IReadmeCardProps> = (props) => 
                                 '$2$3)',
                             )}
                     </Readme>
-
                 )}
 
                 {(!isLoading && !readme?.content) && (

@@ -1,15 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState, useEffect } from 'react';
+import React, { } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import { DevBox } from '../../model/msdev/DevBox';
@@ -19,7 +15,6 @@ import { ReactComponent as WindowsLogo } from '../../img/windows_info.svg'
 
 import SvgIcon from '@mui/material/SvgIcon'
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
@@ -30,7 +25,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MemoryIcon from '@mui/icons-material/Memory';
 import StorageIcon from '@mui/icons-material/Storage';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
-import TableRowsIcon from '@mui/icons-material/TableRows';
 
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
@@ -39,13 +33,8 @@ import ListItem from '@mui/material/ListItem';
 
 import ListItemText from '@mui/material/ListItemText';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
 import { Theme, useTheme } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
 
@@ -77,7 +66,7 @@ const getStateText = (state?: string) => {
     return undefined;
 }
 
-export const DevBoxCard: React.FunctionComponent<IDevBoxCardProps> = (props) => {
+export const DevBoxCard: React.FC<IDevBoxCardProps> = (props) => {
 
     const { devbox } = props;
 

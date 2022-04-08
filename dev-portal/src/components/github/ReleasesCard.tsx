@@ -21,7 +21,7 @@ export interface IReleasesCardProps {
     repo: string;
 }
 
-export const ReleasesCard: React.FunctionComponent<IReleasesCardProps> = (props) => {
+export const ReleasesCard: React.FC<IReleasesCardProps> = (props) => {
 
     const { org, repo } = props;
 

@@ -17,7 +17,7 @@ export interface IContributorsTooltipProps {
     contributor: Contributor;
 }
 
-export const ContributorsTooltip: React.FunctionComponent<IContributorsTooltipProps> = (props) => {
+export const ContributorsTooltip: React.FC<IContributorsTooltipProps> = (props) => {
 
     const hostname = 'https://github.com';
 

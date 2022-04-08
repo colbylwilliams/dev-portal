@@ -21,7 +21,7 @@ export interface IContributorAvatarProps {
     contributor: Contributor;
 }
 
-export const ContributorAvatar: React.FunctionComponent<IContributorAvatarProps> = (props) => {
+export const ContributorAvatar: React.FC<IContributorAvatarProps> = (props) => {
 
     const { contributor } = props
 

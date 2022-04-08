@@ -1,60 +1,35 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState, useEffect } from 'react';
+import React, { } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import { DevBox } from '../../model/msdev/DevBox';
 
-import windows11 from '../../img/windows11.jpg'
 import { ReactComponent as AzureLogo } from '../../img/azure.svg'
-import { ReactComponent as GitHubLogo } from '../../img/github.svg'
-import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-// import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-// import DownloadIcon from '@mui/icons-material/Download';
-// import DeleteIcon from '@mui/icons-material/DeleteOutline';
-// import StopIcon from '@mui/icons-material/StopOutlined';
 
-
-import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
-// import MemoryIcon from '@mui/icons-material/Memory';
-// import StorageIcon from '@mui/icons-material/Storage';
-// import SelectAllIcon from '@mui/icons-material/SelectAll';
-// import TableRowsIcon from '@mui/icons-material/TableRows';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import SvgIcon from '@mui/material/SvgIcon'
 
 import ListItemText from '@mui/material/ListItemText';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
 import { useTheme } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
 import { ComponentTemplate } from 'teamcloud';
-import ListItemIcon from '@mui/material/ListItemIcon';
 
 const titleRe = /^(?:#+.*)$/gm
 const deviderRe = /^(?:-{3,})$/gm
@@ -78,7 +53,7 @@ export interface IComponentCardProps {
     template: ComponentTemplate;
 }
 
-export const ComponentCard: React.FunctionComponent<IComponentCardProps> = (props) => {
+export const ComponentCard: React.FC<IComponentCardProps> = (props) => {
 
     const { template } = props;
 
@@ -107,7 +82,7 @@ export const ComponentCard: React.FunctionComponent<IComponentCardProps> = (prop
     };
 
     return (
-        <Card>
+        <Card sx={{ p: 1 }}>
             {/* <CardMedia component='img' src={windows11} alt='Windows 11' height='200' /> */}
             <CardHeader sx={{ pt: theme.spacing(3) }}
                 action={<IconButton onClick={handleMenuClick} aria-label='settings'>

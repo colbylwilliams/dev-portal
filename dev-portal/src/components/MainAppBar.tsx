@@ -1,29 +1,24 @@
-import * as React from 'react';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import React, { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
-import colby from '../img/colby.jpg'
-import { ReactComponent as ContosoLogo } from '../img/contoso_logo.svg'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useLocation } from 'react-router-dom';
+import Popover from '@mui/material/Popover';
+import { MemberDetails } from './msdev/MemberDetails';
+import { useGraphUser } from '../hooks';
+import { MemberAvatar } from './msdev/MemberAvatar';
 
 const drawerWidth = 240;
-
-const userSettings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -74,19 +69,24 @@ const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
 
     const { pathname } = useLocation();
 
-    const [org, setOrg] = React.useState('contoso');
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const { data: user } = useGraphUser();
 
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
+    const [org, setOrg] = useState('contoso');
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    const [popoverAnchorEl, setPopoverAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+    const popoverOpen = Boolean(popoverAnchorEl);
 
     const handleOrgChange = (event: SelectChangeEvent) => {
         setOrg(event.target.value as string);
+    };
+
+    const handlePopoverClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setPopoverAnchorEl(event.currentTarget);
+    };
+
+    const handlePopoverClose = () => {
+        setPopoverAnchorEl(null);
     };
 
     return (
@@ -133,32 +133,17 @@ const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
                 </Box>
 
                 <Box sx={{ paddingLeft: '12px', flexGrow: 0 }}>
-                    <Tooltip title='Open settings'>
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt='Colby Williams' src={colby} />
-                        </IconButton>
-                    </Tooltip>
-                    <Menu
-                        sx={{ mt: '45px' }}
-                        id='menu-appbar'
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}>
-                        {userSettings.map((setting) => (
-                            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                <Typography textAlign='center'>{setting}</Typography>
-                            </MenuItem>
-                        ))}
-                    </Menu>
+                    <IconButton onClick={handlePopoverClick} sx={{ p: 0 }}>
+                        <MemberAvatar user={user} />
+                    </IconButton>
+                    <Popover
+                        open={popoverOpen}
+                        anchorEl={popoverAnchorEl}
+                        onClose={handlePopoverClose}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'right', }}>
+                        {user && <MemberDetails user={user} signout />}
+                    </Popover>
                 </Box>
             </Toolbar>
         </AppBar>

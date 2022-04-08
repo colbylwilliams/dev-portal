@@ -3,13 +3,15 @@
 
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { DefaultDevBoxes } from '../../model/msdev/DevBox';
-import { DevBoxCard } from './DevBoxCard';
+import { DefaultDevBoxes, DevBox } from '../../model/msdev/DevBox';
+import { useProject } from '../../hooks/teamcloud';
+import { DevBoxesView } from './DevBoxesView';
+import { MainView } from '../MainView';
+import { ComponentsView } from './ComponentsView';
+import { TeamsView } from '../github/TeamsView';
+import { RepoView } from '../github/RepoView';
 
 export interface IProjectViewProps {
 
@@ -30,16 +32,16 @@ function TabPanel(props: TabPanelProps) {
             hidden={value !== index}
             {...other}>
             {value === index && (
-                <Box sx={{ p: 2 }}>
+                <MainView title={index === 'Source Code' ? undefined : index}>
                     {children}
-                </Box>
+                </MainView>
             )}
         </div>
     );
 }
 
 
-export const ProjectView: React.FunctionComponent<IProjectViewProps> = (props) => {
+export const ProjectView: React.FC<IProjectViewProps> = (props) => {
 
     const [value, setValue] = React.useState('Overview');
 
@@ -47,11 +49,20 @@ export const ProjectView: React.FunctionComponent<IProjectViewProps> = (props) =
         setValue(newValue);
     };
 
-    const devboxes = DefaultDevBoxes.filter(devbox => devbox.project === 'Project Alpha');
+    const { data: project } = useProject();
+
+    const [devboxes, setDevboxes] = useState<DevBox[]>([]);
+
+    useEffect(() => {
+        if (project?.displayName)
+            setDevboxes(DefaultDevBoxes.filter(devbox => devbox.project === project.displayName));
+        else
+            setDevboxes([]);
+    }, [project]);
+
 
     return (
-        <Box component='main' sx={{ flexGrow: 1, px: 6, pb: 6, pt: 4 }}>
-            <Toolbar />
+        <Box>
             <Tabs value={value} onChange={handleChange} >
                 <Tab value='Overview' label='Overview' />
                 <Tab value='Source Code' label='Source Code' />
@@ -60,48 +71,19 @@ export const ProjectView: React.FunctionComponent<IProjectViewProps> = (props) =
                 <Tab value='Workflows' label='Workflows' />
                 <Tab value='Team' label='Team' />
             </Tabs>
-            <TabPanel value={value} index={'Overview'} >
-                <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                    Overview
-                </Typography>
-            </TabPanel>
-            <TabPanel value={value} index={'Source code'} >
-                <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                    Source code
-                </Typography>
+            <TabPanel value={value} index={'Overview'} />
+            <TabPanel value={value} index={'Source Code'} >
+                <RepoView org='microsoft' repo='TeamCloud' />
             </TabPanel>
             <TabPanel value={value} index={'Dev Boxes'} >
-                <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                    Dev boxes
-                </Typography>
-                <Grid container spacing={3}>
-                    {devboxes.map(devbox => (
-                        <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={devbox.id}>
-                            <DevBoxCard devbox={devbox} />
-                        </Grid>
-                    ))}
-                </Grid>
-
+                <DevBoxesView devboxes={devboxes} />
             </TabPanel>
-            {/* <TabPanel value={value} index={'Codespaces'} >
-                <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                    Codespaces
-                </Typography>
-            </TabPanel> */}
             <TabPanel value={value} index={'Environments'} >
-                <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                    Environments
-                </Typography>
+                <ComponentsView />
             </TabPanel>
-            <TabPanel value={value} index={'Workflows'} >
-                <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                    Workflows
-                </Typography>
-            </TabPanel>
+            <TabPanel value={value} index={'Workflows'} />
             <TabPanel value={value} index={'Team'} >
-                <Typography variant='h4' fontWeight='600' component='h1' mb='26px' gutterBottom>
-                    Team
-                </Typography>
+                <TeamsView />
             </TabPanel>
         </Box>
     );

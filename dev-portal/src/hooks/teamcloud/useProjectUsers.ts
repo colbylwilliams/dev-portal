@@ -23,3 +23,21 @@ export const useProjectUsers = () => {
         enabled: isAuthenticated && !!project?.id
     });
 }
+
+
+
+export const useUsersForProject = (org: string, project: string) => {
+
+    const isAuthenticated = useIsAuthenticated();
+
+    return useQuery(['org', org, 'project', project, 'user'], async () => {
+
+        const { data } = await api.getProjectUsers(org, project, {
+            onResponse: onResponse
+        });
+
+        return data;
+    }, {
+        enabled: isAuthenticated && !!org && !!project
+    });
+}

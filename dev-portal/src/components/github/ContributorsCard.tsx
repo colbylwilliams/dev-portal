@@ -15,7 +15,7 @@ export interface IContributorsCardProps {
     repo: string;
 }
 
-export const ContributorsCard: React.FunctionComponent<IContributorsCardProps> = (props) => {
+export const ContributorsCard: React.FC<IContributorsCardProps> = (props) => {
 
     const { org, repo } = props;
 

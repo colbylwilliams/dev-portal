@@ -95,8 +95,9 @@ export const getGraphUser = async (id: string): Promise<GraphUser | null> => {
             .get();
         let user = response as GraphUser;
         user.type = 'User';
-        if (user.userType?.toLowerCase() === 'member')
-            user.imageUrl = await getUserPhoto(user.id);
+        // console.warn(user.userType ?? 'foo')
+        // if (user.userType?.toLowerCase() === 'member')
+        //     user.imageUrl = await getUserPhoto(user.id);
         return user;
     } catch (error) {
         let graphError = error as GraphError;
@@ -209,13 +210,17 @@ export const getMePhoto = async (size: PhotoSize = PhotoSize.size240x240): Promi
             .version('beta') // currently only work in beta: https://github.com/microsoftgraph/msgraph-sdk-dotnet/issues/568
             .responseType(ResponseType.BLOB)
             .get();
+
+        console.warn(response);
         return URL.createObjectURL(response);
     } catch (error) {
 
+        console.warn('Failed to get me photo.');
+
         if ((error as GraphError).statusCode === 404) return undefined;
 
-        // console.warn('Failed to get me photo.');
-        // console.warn(error as GraphError);
+        console.warn('Failed to get me photo.');
+        console.warn(error as GraphError);
 
         // swollow this error see: https://docs.microsoft.com/en-us/graph/known-issues#photo-restrictions
         return undefined;
@@ -232,12 +237,16 @@ export const getUserPhoto = async (id: string, size: PhotoSize = PhotoSize.size2
             .version('beta') // currently only work in beta: https://github.com/microsoftgraph/msgraph-sdk-dotnet/issues/568
             .responseType(ResponseType.BLOB)
             .get();
+        console.warn(response);
         return URL.createObjectURL(response);
     } catch (error) {
+
+        console.warn(`Failed to get user photo (${id}).`);
+
         if ((error as GraphError).statusCode === 404) return undefined;
 
-        // console.warn(`Failed to get user photo (${id}).`);
-        // console.error(error as GraphError);
+        console.warn(`Failed to get user photo (${id}).`);
+        console.error(error as GraphError);
 
         // swollow this error see: https://docs.microsoft.com/en-us/graph/known-issues#photo-restrictions
         return undefined;

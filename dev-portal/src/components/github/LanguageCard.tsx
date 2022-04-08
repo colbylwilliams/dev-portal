@@ -26,7 +26,7 @@ const LanguageChip = styled(Chip)(t => ({
     margin: '2px',
 }));
 
-export const LanguageCard: React.FunctionComponent<ILanguageCardProps> = (props) => {
+export const LanguageCard: React.FC<ILanguageCardProps> = (props) => {
 
     let barWidth = 0;
 
