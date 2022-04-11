@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { DefaultDevBoxes, DevBox } from '../../model/msdev/DevBox';
+import React, { useEffect, useState } from 'react';
 import { useProject } from '../../hooks/teamcloud';
-import { DevBoxesView } from './DevBoxesView';
+import { DefaultDevBoxes, DevBox } from '../../model/msdev/DevBox';
+import { RepoView } from '../github/RepoView';
+import { TeamsView } from '../github/TeamsView';
 import { MainView } from '../MainView';
 import { ComponentsView } from './ComponentsView';
-import { TeamsView } from '../github/TeamsView';
-import { RepoView } from '../github/RepoView';
+import { DevBoxesView } from './DevBoxesView';
 
 export interface IProjectViewProps {
 
@@ -71,7 +71,9 @@ export const ProjectView: React.FC<IProjectViewProps> = (props) => {
                 <Tab value='Workflows' label='Workflows' />
                 <Tab value='Team' label='Team' />
             </Tabs>
-            <TabPanel value={value} index={'Overview'} />
+            <TabPanel value={value} index={'Overview'}>
+
+            </TabPanel>
             <TabPanel value={value} index={'Source Code'} >
                 <RepoView org='microsoft' repo='TeamCloud' />
             </TabPanel>
@@ -87,4 +89,4 @@ export const ProjectView: React.FC<IProjectViewProps> = (props) => {
             </TabPanel>
         </Box>
     );
-}
+};

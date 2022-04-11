@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState, useEffect } from 'react';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import Popover from '@mui/material/Popover';
 import IconButton from '@mui/material/IconButton';
-import { isPrincipalUser } from '../../MSGraph';
+import Popover from '@mui/material/Popover';
+import Skeleton from '@mui/material/Skeleton';
+import React, { useEffect, useState } from 'react';
 import { useMembersForProject } from '../../hooks';
 import { GraphUser } from '../../model/GraphUser';
-import { MemberDetails } from './MemberDetails';
+import { isPrincipalUser } from '../../MSGraph';
 import { MemberAvatar } from './MemberAvatar';
-import Skeleton from '@mui/material/Skeleton';
+import { MemberDetails } from './MemberDetails';
 
 export interface IMemberAvatarGroupProps {
     org: string;
@@ -28,7 +28,7 @@ export const MemberAvatarGroup: React.FC<IMemberAvatarGroupProps> = (props) => {
 
     useEffect(() => {
         if (members) {
-            const usrs = members.filter(m => isPrincipalUser(m.graphPrincipal))?.map(m => m.graphPrincipal as GraphUser)
+            const usrs = members.filter(m => isPrincipalUser(m.graphPrincipal))?.map(m => m.graphPrincipal as GraphUser);
             setUsers(usrs);
         } else {
             setUsers([]);
@@ -53,7 +53,7 @@ export const MemberAvatarGroup: React.FC<IMemberAvatarGroupProps> = (props) => {
 
     return users.length > 0 ? (
         <>
-            <AvatarGroup sx={{ justifyContent: 'flex-end' }} total={members?.length ?? 0}>
+            <AvatarGroup sx={{ paddingLeft: '8px', justifyContent: 'flex-end' }} total={members?.length ?? 0}>
                 {users?.map((user, index) => (
                     <IconButton key={index} onClick={(e) => handlePopoverClick(e, user)} sx={{ p: 0 }}>
                         <MemberAvatar user={user} />
@@ -70,11 +70,11 @@ export const MemberAvatarGroup: React.FC<IMemberAvatarGroupProps> = (props) => {
             </Popover>
         </>
     ) : (
-        <AvatarGroup sx={{ justifyContent: 'flex-end' }}>
+        <AvatarGroup sx={{ paddingLeft: '8px', justifyContent: 'flex-end' }}>
             {[...Array(5)].map((_, index) => (
                 <Skeleton key={index} variant="circular" sx={{ ml: '-8px' }} width={44} height={44} animation="wave" />
             ))}
         </AvatarGroup>
 
     );
-}
+};

@@ -1,16 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm'
+import gfm from 'remark-gfm';
 import { useReadme } from '../../hooks/github';
 
 export interface IReadmeCardProps {
@@ -60,6 +57,11 @@ const Readme = styled(ReactMarkdown)(t => ({
     '& tr': {
         backgroundColor: t.theme.palette.background.paper,
     },
+    '& pre': {
+        padding: t.theme.spacing(1),
+        overflow: 'scroll',
+        backgroundColor: t.theme.palette.mode === 'light' ? '#eee' : '#333',
+    },
     // '& tr:nth-child(odd)': {
     //     backgroundColor: t.theme.palette.background.default,
     // },
@@ -74,12 +76,12 @@ const Readme = styled(ReactMarkdown)(t => ({
     overflowY: 'auto',
     paddingRight: '8px',
     '&::-webkit-scrollbar-track': {
-        backgroundColor: '#F5F5F5',
+        backgroundColor: t.theme.palette.mode === 'light' ? '#F5F5F5' : '#424242',
         borderRadius: '5px',
     },
     '&::-webkit-scrollbar': {
         width: '5px',
-        backgroundColor: '#F5F5F5',
+        backgroundColor: t.theme.palette.mode === 'light' ? '#F5F5F5' : '#424242',
         borderRadius: '5px',
     },
     '&::-webkit-scrollbar-thumb': {
@@ -99,23 +101,70 @@ export const ReadmeCard: React.FC<IReadmeCardProps> = (props) => {
 
     const theme = useTheme();
 
-    console.log(theme.palette.info.main)
+    console.log(theme.palette.info.main);
 
     return (
-        <Card>
-            <CardHeader title='README' />
-            <Divider />
+        // <Box>
+        //     {isLoading && (
+        //         <Stack spacing={1}>
+        //             <Skeleton width='60%' />
+        //             <Skeleton />
+        //             <Skeleton variant='rectangular' height={200} />
+        //             <Skeleton /><Skeleton />
+        //             <Skeleton width='60%' />
+        //             <Skeleton width='80%' />
+        //             <Skeleton /><Skeleton />
+        //             <Skeleton width='70%' />
+        //         </Stack>
+        //     )}
+
+        //     {(!isLoading && readme?.content) && (
+
+        //         <Readme remarkPlugins={[gfm]}>
+        //             {b64DecodeUnicode(readme.content)
+        //                 .replace(
+        //                     /\[([^[\]]*)\]\((?!https?:\/\/)(.*?)(\.png|\.jpg|\.jpeg|\.gif|\.webp)(.*)\)/gim,
+        //                     '[$1]' +
+        //                     `(//${hostname}/${org}/${repo}/raw/${getDefaultBranch(
+        //                         readme.url,
+        //                     )}/` +
+        //                     '$2$3$4)',
+        //                 )
+        //                 .replace(
+        //                     /\[([^[\]]*)\]\((?!https?:\/\/)docs\/(.*?)(\.md)\)/gim,
+        //                     '[$1](docs/$2/)',
+        //                 )
+        //                 .replace(
+        //                     /\[([^[\]]*)\]\((?!https?:\/\/)(.*?)(\.md)\)/gim,
+        //                     '[$1]' +
+        //                     `(//${hostname}/${org}/${repo}/blob/${getDefaultBranch(
+        //                         readme.url,
+        //                     )}/` +
+        //                     '$2$3)',
+        //                 )}
+        //         </Readme>
+        //     )}
+
+        //     {(!isLoading && !readme?.content) && (
+        //         'error'
+        //     )}
+
+        // </Box>
+
+        <Card sx={{ p: 1 }}>
+            {/* <CardHeader title='README' /> */}
+            {/* <Divider /> */}
             <CardContent>
                 {isLoading && (
                     <Stack spacing={1}>
-                        <Skeleton width='60%' />
+                        {/* <Skeleton width='60%' />
                         <Skeleton />
                         <Skeleton variant='rectangular' height={200} />
                         <Skeleton /><Skeleton />
                         <Skeleton width='60%' />
                         <Skeleton width='80%' />
                         <Skeleton /><Skeleton />
-                        <Skeleton width='70%' />
+                        <Skeleton width='70%' /> */}
                     </Stack>
                 )}
 
@@ -153,4 +202,4 @@ export const ReadmeCard: React.FC<IReadmeCardProps> = (props) => {
             </CardContent>
         </Card>
     );
-}
+};

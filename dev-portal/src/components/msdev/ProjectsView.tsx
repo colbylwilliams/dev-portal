@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
-import Grid from '@mui/material/Grid';
-import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { ProjectCard } from './ProjectCard';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import React from 'react';
 import { useProjects } from '../../hooks/teamcloud';
+import { ProjectCard } from './ProjectCard';
 
 export interface IProjectsViewProps { }
 
@@ -28,4 +28,4 @@ export const ProjectsView: React.FC<IProjectsViewProps> = (props) => {
             ))}
         </Grid>
     );
-}
+};

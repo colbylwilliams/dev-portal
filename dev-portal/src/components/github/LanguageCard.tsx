@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
 import LinearProgress from '@mui/material/LinearProgress';
+import { styled, useTheme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
+import React from 'react';
 import { useLanguages } from '../../hooks/github';
 import { colors } from '../../model/github/colors';
-import { styled, useTheme } from '@mui/material/styles';
-import Divider from '@mui/material/Divider';
-import Box from '@mui/material/Box';
 
 export interface ILanguageCardProps {
     org: string;
@@ -107,4 +107,4 @@ export const LanguageCard: React.FC<ILanguageCardProps> = (props) => {
     ) : (
         <></>
     );
-}
+};

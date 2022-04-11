@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
+import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import { AzureDevOpsIcon, AzureIcon, CodespacesIcon, GitHubActionsIcon, GitHubIcon, OneDriveIcon, StackOverflowIcon, TeamsIcon, VisualStudioCodeIcon, VisualStudioIcon } from './icons';
 
-import { AzureIcon, VisualStudioCodeIcon, CodespacesIcon, StackOverflowIcon, AzureDevOpsIcon, GitHubIcon, TeamsIcon, VisualStudioIcon, GitHubActionsIcon, OneDriveIcon, } from './icons';
 
 export interface IToolkitCardProps {
 
@@ -69,7 +69,7 @@ const tools = [
         alt: 'GitHub',
         icon: <GitHubIcon style={{ height: '100%', width: '100%' }} />
     }
-]
+];
 
 
 export const ToolkitCard: React.FC<IToolkitCardProps> = (props) => {
@@ -81,14 +81,14 @@ export const ToolkitCard: React.FC<IToolkitCardProps> = (props) => {
         <Card elevation={0}>
             <CardHeader title='Toolkit' />
             <CardContent sx={{ padding: theme.spacing(0, 2) }}>
-                <Card>
+                <Card elevation={0}>
                     <CardContent sx={{ padding: theme.spacing(0) }}>
 
-                        <Grid container spacing={2} pt={2} justifyContent='center'>
+                        <Grid container spacing={1.2} pt={2} justifyContent='space-evenly'>
                             {tools.map((tool, index) => (
                                 <Grid item key={index} py={theme.spacing(0)}>
                                     <IconButton>
-                                        <Avatar alt={tool.alt} sx={{ width: 86, height: 86, p: 2, bgcolor: theme.palette.background.paper }}>
+                                        <Avatar alt={tool.alt} sx={{ width: 86, height: 86, p: 2, bgcolor: theme.palette.background.default }}>
                                             {tool.icon}
                                         </Avatar>
                                     </IconButton>
@@ -106,4 +106,4 @@ export const ToolkitCard: React.FC<IToolkitCardProps> = (props) => {
         </Card>
 
     );
-}
+};

@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
 import Avatar from '@mui/material/Avatar';
+import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
+import React from 'react';
 import { Contributor } from '../../model/github';
 import { ContributorsTooltip } from './ContributorTooltip';
-import { styled } from '@mui/material/styles';
 
 const LightTooltip = styled(Tooltip)(theme => ({
     tooltip: {
@@ -23,7 +23,7 @@ export interface IContributorAvatarProps {
 
 export const ContributorAvatar: React.FC<IContributorAvatarProps> = (props) => {
 
-    const { contributor } = props
+    const { contributor } = props;
 
     return (
         <LightTooltip
@@ -36,4 +36,4 @@ export const ContributorAvatar: React.FC<IContributorAvatarProps> = (props) => {
             />
         </LightTooltip>
     );
-}
+};

@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState } from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import SearchIcon from '@mui/icons-material/Search';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
 import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useLocation } from 'react-router-dom';
+import MenuItem from '@mui/material/MenuItem';
 import Popover from '@mui/material/Popover';
-import { MemberDetails } from './msdev/MemberDetails';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { alpha, styled, useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useGraphUser } from '../hooks';
 import { MemberAvatar } from './msdev/MemberAvatar';
+import { MemberDetails } from './msdev/MemberDetails';
 
 const drawerWidth = 240;
 
@@ -68,6 +68,8 @@ export interface IMainAppBarProps { }
 const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
 
     const { pathname } = useLocation();
+
+    const theme = useTheme();
 
     const { data: user } = useGraphUser();
 
@@ -121,10 +123,15 @@ const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
 
                     <Select
                         value={org}
-                        sx={{ border: 'none', '& fieldset': { border: 'none' } }}
-                        SelectDisplayProps={{ style: { border: 'none' } }}
+                        sx={{
+                            color: theme.palette.common.white,
+                            '& fieldset': { border: 'none' },
+                            '& .MuiSelect-icon': {
+                                color: theme.palette.common.white,
+                            }
+                        }}
+                        // SelectDisplayProps={{ style: { border: 'none' } }}
                         MenuProps={{ style: { border: 'none' } }}
-                        // label="Age"
                         onChange={handleOrgChange}
                         IconComponent={KeyboardArrowDownIcon}>
                         <MenuItem value={'contoso'}>Contoso</MenuItem>

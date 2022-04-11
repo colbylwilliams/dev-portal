@@ -1,28 +1,34 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
+import { InteractionType } from '@azure/msal-browser';
+import { AuthenticatedTemplate, MsalAuthenticationResult, useMsalAuthentication } from '@azure/msal-react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import MainAppBar from './MainAppBar';
-import MainDrawer from './MainDrawer';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { Route, Routes } from 'react-router-dom';
-import { AuthenticatedTemplate, MsalAuthenticationResult, useMsalAuthentication } from '@azure/msal-react';
-import { InteractionType } from '@azure/msal-browser';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { auth } from '../API';
 import { DefaultDevBoxes } from '../model/msdev/DevBox';
-import { RepoView } from './github/RepoView';
-import { ProjectView } from './msdev/ProjectView';
-import { DevBoxesView } from './msdev/DevBoxesView';
-import { ProjectsView } from './msdev/ProjectsView';
-import { ComponentsView } from './msdev/ComponentsView';
 import { DashboardView } from './DashboardView';
+import { RepoView } from './github/RepoView';
 import { TeamsView } from './github/TeamsView';
+import MainAppBar from './MainAppBar';
+import MainDrawer from './MainDrawer';
 import { MainView } from './MainView';
+import { ApiView } from './msdev/ApiView';
+import { ComponentsView } from './msdev/ComponentsView';
+import { DevBoxesView } from './msdev/DevBoxesView';
+import { DocsView } from './msdev/DocsView';
+import { NewView } from './msdev/NewView';
+import { ProjectsView } from './msdev/ProjectsView';
+import { ProjectView } from './msdev/ProjectView';
+import { ServicesView } from './msdev/ServicesView';
+import { SettingsView } from './SettingsView';
 
 export interface IRootViewProps { }
+
+export const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 export const RootView: React.FC<IRootViewProps> = (props) => {
 
@@ -30,54 +36,107 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
 
     useEffect(() => {
         if (authResult.error) {
-            console.log('logging in...')
+            console.log('logging in...');
             authResult.login(InteractionType.Redirect, { scopes: auth.getScopes() });
         }
     }, [authResult]);
 
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    // const theme = React.useMemo(() =>
+    //     createTheme({
+
+    //         palette: {
+    //             mode: prefersDarkMode ? 'dark' : 'light',
+    //             // background: {
+    //             //     default: prefersDarkMode ? '#333' : '#fff',
+    //             //     paper: prefersDarkMode ? '#424242' : '#fff',
+    //             // }
+    //         },
+    //     }),
+    //     [prefersDarkMode]
+    // );
+
+    const [mode, setMode] = useState<'light' | 'dark'>('dark');
+
+    const colorMode = useMemo(() => ({
+        toggleColorMode: () => setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light')),
+    }), []
+    );
 
     const theme = React.useMemo(() =>
         createTheme({
 
             palette: {
-                mode: prefersDarkMode ? 'dark' : 'light',
+                mode: mode,
                 background: {
-                    default: prefersDarkMode ? '#333' : '#fff',
-                    paper: prefersDarkMode ? '#424242' : '#fff',
+                    default: mode === 'dark' ? '#333' : '#fff',
+                    paper: mode === 'dark' ? '#424242' : '#fff',
                 }
             },
         }),
-        [prefersDarkMode],
+        [mode]
     );
 
-    // const [drawerOpen, setDrawerOpen] = React.useState(true);
-
-
+    // const theme = React.useMemo(() =>
+    //     createTheme(getDesignTokens(mode))
+    //     , [mode]);
 
     return (
-        <ThemeProvider theme={theme}>
-            <AuthenticatedTemplate>
-                <Box sx={{ display: 'flex' }}>
-                    <CssBaseline />
-                    <MainAppBar />
-                    <MainDrawer />
-                    <Routes>
-                        <Route path='/orgs/:orgId' element={<MainView main><DashboardView {...{}} /></MainView>} />
-                        <Route path='/orgs/:orgId/devboxes' element={<MainView main title='Dev Boxes'><DevBoxesView devboxes={DefaultDevBoxes} {...{}} /></MainView>} />
-                        {/* <Route path='/orgs/:orgId/environments' element={<MainView main title={}><ComponentsView {...{}} />} /></MainView> */}
-                        <Route path='/orgs/:orgId/sourcecode' element={<MainView main><RepoView org='microsoft' repo='TeamCloud' {...{}} /></MainView>} />
-                        <Route path='/orgs/:orgId/teams' element={<MainView main title='GitHub Teams'><TeamsView {...{}} /></MainView>} />
-                        <Route path='/orgs/:orgId/projects' element={<MainView main title='Projects'><ProjectsView {...{}} /></MainView>} />
-                        <Route path='/orgs/:orgId/projects/:projectId' element={<MainView main><ProjectView {...{}} /></MainView>} />
-                        <Route path='/orgs/:orgId/projects/:projectId/environments' element={<MainView main title='Environments'><ComponentsView {...{}} /></MainView>} />
+        <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+                <AuthenticatedTemplate>
+                    <Box sx={{ display: 'flex' }}>
+                        <CssBaseline />
+                        <MainAppBar />
+                        <MainDrawer />
+                        <Routes>
+                            <Route path='/orgs/:orgId' element={
+                                <MainView main><DashboardView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/new' element={
+                                <MainView main title='New'><NewView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/services' element={
+                                <MainView main title='Services'><ServicesView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/devboxes' element={
+                                <MainView main title='Dev Boxes'><DevBoxesView devboxes={DefaultDevBoxes} {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/sourcecode' element={
+                                <MainView main><RepoView org='microsoft' repo='TeamCloud' {...{}} /></MainView>
+                                // <MainView main><RepoView org='microsoft' repo='vscode' {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/teams' element={
+                                <MainView main title='GitHub Teams'><TeamsView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/apis' element={
+                                <MainView main title='APIs'><ApiView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/docs' element={
+                                <MainView main title='Docs'><DocsView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/projects' element={
+                                <MainView main title='Projects'><ProjectsView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/projects/:projectId' element={
+                                <MainView main><ProjectView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/projects/:projectId/environments' element={
+                                <MainView main title='Environments'><ComponentsView {...{}} /></MainView>
+                            } />
+                            <Route path='/orgs/:orgId/settings' element={
+                                <MainView main title='Settings'><SettingsView {...{}} /></MainView>
+                            } />
 
-                        <Route path='/*' element={
-                            <></>
-                        } />
-                    </Routes>
-                </Box>
-            </AuthenticatedTemplate>
-        </ThemeProvider>
+                            <Route path='/*' element={
+                                <></>
+                            } />
+                        </Routes>
+                    </Box>
+                </AuthenticatedTemplate>
+            </ThemeProvider>
+        </ColorModeContext.Provider>
     );
-}
+};

@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import LocalOfferOutlined from '@mui/icons-material/LocalOfferOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import LinearProgress from '@mui/material/LinearProgress';
+import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
+import LinearProgress from '@mui/material/LinearProgress';
+import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Link from '@mui/material/Link';
-import LocalOfferOutlined from '@mui/icons-material/LocalOfferOutlined';
-import { useReleases } from '../../hooks/github';
-import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import React from 'react';
+import { useReleases } from '../../hooks/github';
 
 export interface IReleasesCardProps {
     org: string;
@@ -45,7 +45,7 @@ export const ReleasesCard: React.FC<IReleasesCardProps> = (props) => {
                                         {new Date(release.published_at).toLocaleDateString()}
                                     </Typography>
                                 )}
-                                <Link href={release.html_url} color="inherit" target="_blank" rel="noopener noreferrer"
+                                <Link href={release.html_url} color='inherit' target='_blank' rel='noopener noreferrer'
                                     sx={{
                                         textDecoration: 'none',
                                         fontSize: '1.1rem',
@@ -56,17 +56,17 @@ export const ReleasesCard: React.FC<IReleasesCardProps> = (props) => {
                                 </Link>
 
                                 {release.prerelease && (
-                                    <Chip color="primary" size="small" label="Pre-release" />
+                                    <Chip color='primary' size='small' label='Pre-release' />
                                 )}
 
                             </Stack>
-                            <Link href={release.html_url} color="inherit" target="_blank" rel="noopener noreferrer"
+                            <Link href={release.html_url} color='inherit' target='_blank' rel='noopener noreferrer'
                                 sx={{
                                     textDecoration: 'none',
                                     fontSize: '0.9rem',
                                     minWidth: '70px',
                                 }}>
-                                <LocalOfferOutlined fontSize="inherit" sx={{ verticalAlign: 'middle' }} />
+                                <LocalOfferOutlined fontSize='inherit' sx={{ verticalAlign: 'middle' }} />
                                 {' '}
                                 {release.tag_name}
                             </Link>
@@ -78,4 +78,4 @@ export const ReleasesCard: React.FC<IReleasesCardProps> = (props) => {
     ) : (
         <></>
     );
-}
+};

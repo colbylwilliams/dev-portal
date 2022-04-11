@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import LocationOn from '@mui/icons-material/LocationOn';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import LocationOn from '@mui/icons-material/LocationOn';
 import LinearProgress from '@mui/material/LinearProgress';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import React from 'react';
 import { useUser } from '../../hooks/github/useUser';
 import { Contributor } from '../../model/github';
-import Divider from '@mui/material/Divider';
 
 export interface IContributorsTooltipProps {
     contributor: Contributor;
@@ -74,4 +74,4 @@ export const ContributorsTooltip: React.FC<IContributorsTooltipProps> = (props) 
             </Grid>
         </Grid>
     );
-}
+};

@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
-import Grid from '@mui/material/Grid';
-import { TeamCard } from './TeamCard';
-import { useTeams } from '../../hooks/github';
-import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import React from 'react';
+import { useTeams } from '../../hooks/github';
+import { TeamCard } from './TeamCard';
 
 export interface ITeamsViewProps { }
 
@@ -28,4 +28,4 @@ export const TeamsView: React.FC<ITeamsViewProps> = (props) => {
             ))}
         </Grid>
     );
-}
+};

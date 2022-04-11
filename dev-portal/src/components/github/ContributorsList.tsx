@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
 import Grid from '@mui/material/Grid';
+import React from 'react';
 import { Contributor } from '../../model/github';
 import { ContributorAvatar } from './ContributorAvatar';
 

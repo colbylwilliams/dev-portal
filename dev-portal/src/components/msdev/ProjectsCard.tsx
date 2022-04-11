@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import CardActions from '@mui/material/CardActions';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
+import React from 'react';
 import { useProjects } from '../../hooks/teamcloud';
-
 import { ProjectCard } from './ProjectCard';
+
 
 export interface IProjectsCardProps {
 
@@ -40,4 +40,4 @@ export const ProjectsCard: React.FC<IProjectsCardProps> = (props) => {
             </CardActions>
         </Card>
     );
-}
+};

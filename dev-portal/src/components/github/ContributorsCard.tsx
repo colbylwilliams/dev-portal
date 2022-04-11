@@ -1,21 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
 import LinearProgress from '@mui/material/LinearProgress';
+import React from 'react';
 import { useContributors } from '../../hooks/github';
 import { ContributorsList } from './ContributorsList';
-import Divider from '@mui/material/Divider';
 
 export interface IContributorsCardProps {
     org: string;
     repo: string;
 }
 
-export const ContributorsCard: React.FC<IContributorsCardProps> = (props) => {
+export const ContributorsCard: React.FunctionComponent<IContributorsCardProps> = (props) => {
 
     const { org, repo } = props;
 
@@ -34,4 +34,13 @@ export const ContributorsCard: React.FC<IContributorsCardProps> = (props) => {
             </CardContent>
         </Card>
     );
-}
+};
+
+{/* <Card>
+    <CardHeader title={
+        <Stack direction='row'>
+            <Typography>
+                Contributors <Chip label="Small" size="small" />
+            </Typography>
+        </Stack>
+    } /> */}

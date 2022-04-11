@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
 import Avatar from '@mui/material/Avatar';
 import { SxProps, Theme } from '@mui/material/styles';
+import React from 'react';
+import claude from '../../img/claude.jpeg';
+import colby from '../../img/colby.jpeg';
+import jay from '../../img/jay.jpeg';
+import kayla from '../../img/kayla.jpeg';
+import markus from '../../img/markus.jpeg';
+import nicole from '../../img/nicole.jpeg';
 import { GraphUser } from '../../model/GraphUser';
 
-import colby from '../../img/colby.jpeg'
-import claude from '../../img/claude.jpeg'
-import markus from '../../img/markus.jpeg'
-import kayla from '../../img/kayla.jpeg'
-import nicole from '../../img/nicole.jpeg'
-import jay from '../../img/jay.jpeg'
 
 
 export interface IMemberAvatarProps {
@@ -45,4 +45,4 @@ export const MemberAvatar: React.FC<IMemberAvatarProps> = (props) => {
             {memberInitials(user)}
         </Avatar>
     );
-}
+};

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
-import Grid from '@mui/material/Grid';
-import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import React from 'react';
 import { useProjectComponentTemplates } from '../../hooks/teamcloud';
 import { ComponentCard } from './ComponentCard';
 
@@ -31,4 +31,4 @@ export const ComponentsView: React.FC<IComponentsViewProps> = (props) => {
             ))}
         </Grid>
     );
-}
+};

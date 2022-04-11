@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import IconButton from '@mui/material/IconButton';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 import { TeamFull } from '../../model/github';
 
 export interface ITeamCardProps {
@@ -28,7 +28,7 @@ export const TeamCard: React.FC<ITeamCardProps> = (props) => {
     const theme = useTheme();
 
     return (
-        <Card>
+        <Card sx={{ p: 1 }}>
             {/* <CardMedia component='img' src={windows11} alt='Windows 11' height='200' /> */}
             <CardHeader sx={{ pt: theme.spacing(3) }}
                 action={<IconButton aria-label='settings'>
@@ -120,4 +120,4 @@ export const TeamCard: React.FC<ITeamCardProps> = (props) => {
 
         </Card>
     );
-}
+};

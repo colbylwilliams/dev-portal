@@ -1,17 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Project } from 'teamcloud';
 import { MemberAvatarGroup } from './MemberAvatarGroup';
@@ -31,7 +32,8 @@ export const ProjectCard: React.FC<IProjectCardProps> = (props) => {
     return (
         <Card sx={{ p: 1 }}>
             <CardHeader title={project.displayName} subheader={project.organizationName} />
-            <CardContent>
+            <Divider />
+            <CardContent sx={{ pt: 2 }}>
                 <Typography variant='subtitle2' gutterBottom component='div'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Typography>
@@ -58,4 +60,4 @@ export const ProjectCard: React.FC<IProjectCardProps> = (props) => {
             </CardActions>
         </Card>
     );
-}
+};

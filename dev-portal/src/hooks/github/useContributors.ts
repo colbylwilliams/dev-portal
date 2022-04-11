@@ -15,16 +15,28 @@ export const useContributors = (org: string, repo: string) => {
             userAgent: 'TeamCloud'
         });
 
-        const data: Contributor[] = [];
-
-        for await (const response of octokit.paginate.iterator(octokit.rest.repos.listContributors, {
+        const response = await octokit.rest.repos.listContributors({
             owner: org,
-            repo: repo
-        })) {
-            data.push(...response.data);
-        }
+            repo: repo,
+            per_page: 20
+        });
 
-        console.log(data);
+        const last_url = ((response.headers.link || '').match(/<([^>]+)>;\s*rel="last"/) || [])[1];
+        console.log(last_url);
+
+        const next_url = ((response.headers.link || '').match(/<([^>]+)>;\s*rel="next"/) || [])[1];
+        console.log(next_url);
+
+        const data = response.data;
+
+        // for await (const response of octokit.paginate.iterator(octokit.rest.repos.listContributors, {
+        //     owner: org,
+        //     repo: repo
+        // })) {
+        //     data.push(...response.data);
+        // }
+
+        // console.log(data);
 
         return data;
     }, {

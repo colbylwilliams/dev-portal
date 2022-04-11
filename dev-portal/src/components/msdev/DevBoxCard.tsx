@@ -1,44 +1,45 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
+import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import DownloadIcon from '@mui/icons-material/Download';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MemoryIcon from '@mui/icons-material/Memory';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import StartIcon from '@mui/icons-material/PlayArrow';
+import SelectAllIcon from '@mui/icons-material/SelectAll';
+import StopIcon from '@mui/icons-material/StopOutlined';
+import StorageIcon from '@mui/icons-material/Storage';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import { DevBox } from '../../model/msdev/DevBox';
-
-import windows11 from '../../img/windows11.jpg'
-import { ReactComponent as WindowsLogo } from '../../img/windows_info.svg'
-
-import SvgIcon from '@mui/material/SvgIcon'
-import ListItemIcon from '@mui/material/ListItemIcon';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import DownloadIcon from '@mui/icons-material/Download';
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import StopIcon from '@mui/icons-material/StopOutlined';
-import StartIcon from '@mui/icons-material/PlayArrow';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import MemoryIcon from '@mui/icons-material/Memory';
-import StorageIcon from '@mui/icons-material/Storage';
-import SelectAllIcon from '@mui/icons-material/SelectAll';
-
 import CardMedia from '@mui/material/CardMedia';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Theme, useTheme } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
+import { Theme, useTheme } from '@mui/material/styles';
+import SvgIcon from '@mui/material/SvgIcon';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import { getDevBoxBrowserUrl } from '../../API';
+import windows11 from '../../img/windows11.jpg';
+import { ReactComponent as WindowsLogo } from '../../img/windows_info.svg';
+import { DevBox } from '../../model/msdev/DevBox';
 
-import { getDevBoxBrowserUrl } from '../../API'
+
+
+
+
 
 export interface IDevBoxCardProps {
     devbox: DevBox;
@@ -64,7 +65,7 @@ const getStateText = (state?: string) => {
         case 'stopped': return 'Stopped';
     };
     return undefined;
-}
+};
 
 export const DevBoxCard: React.FC<IDevBoxCardProps> = (props) => {
 
@@ -105,7 +106,10 @@ export const DevBoxCard: React.FC<IDevBoxCardProps> = (props) => {
                 </IconButton>}
                 title={(<strong>{devbox.name}</strong>)}
                 subheader={(<strong>{devbox.project}</strong>)} />
-            <CardContent sx={{ padding: theme.spacing(0, 2) }}>
+            <Divider />
+            {/* <CardContent sx={{ pt: 2 }}> */}
+
+            <CardContent sx={{ padding: theme.spacing(2, 2, 0) }}>
                 <List dense>
                     <ListItem disablePadding>
                         <ListItemIcon sx={{ minWidth: '38px' }}>
@@ -183,4 +187,4 @@ export const DevBoxCard: React.FC<IDevBoxCardProps> = (props) => {
 
         </Card>
     );
-}
+};

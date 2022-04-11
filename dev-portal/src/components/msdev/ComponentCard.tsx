@@ -1,53 +1,54 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-
-import { ReactComponent as AzureLogo } from '../../img/azure.svg'
 import AddIcon from '@mui/icons-material/Add';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import SvgIcon from '@mui/material/SvgIcon'
-
 import ListItemText from '@mui/material/ListItemText';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useTheme } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material/styles';
+import SvgIcon from '@mui/material/SvgIcon';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 import { ComponentTemplate } from 'teamcloud';
+import { ReactComponent as AzureLogo } from '../../img/azure.svg';
 
-const titleRe = /^(?:#+.*)$/gm
-const deviderRe = /^(?:-{3,})$/gm
-const imageOrLinkRe = /^(?:!?\[[^\]]*\]\([^[\]()]*\))$/gm
+
+
+
+const titleRe = /^(?:#+.*)$/gm;
+const deviderRe = /^(?:-{3,})$/gm;
+const imageOrLinkRe = /^(?:!?\[[^\]]*\]\([^[\]()]*\))$/gm;
 
 const getTypeIcon = (type?: string) => {
     switch (type?.toLowerCase()) {
-        case 'environment': return <SvgIcon fontSize='inherit' component={AzureLogo} />
+        case 'environment': return <SvgIcon fontSize='inherit' component={AzureLogo} />;
         // case 'repository': return <SvgIcon fontSize='inherit' component={GitHubLogo} />
-        case 'repository': return <GitHubIcon fontSize='inherit' />
+        case 'repository': return <GitHubIcon fontSize='inherit' />;
     }
     return undefined;
-}
+};
 
 const getDescription = (description?: string) => {
     const cleanDesc = description?.replace(imageOrLinkRe, '').replace(titleRe, '').replace(deviderRe, '');
     return { description: cleanDesc, truncated: cleanDesc && cleanDesc.length > 347 ? `${cleanDesc.substring(0, 347)}...` : cleanDesc };
-}
+};
 
 export interface IComponentCardProps {
     template: ComponentTemplate;
@@ -99,7 +100,8 @@ export const ComponentCard: React.FC<IComponentCardProps> = (props) => {
                     {getTypeIcon(template.type)}
                     <div>{template.type}</div>
                 </Stack>)} />
-            <CardContent >
+            <Divider />
+            <CardContent sx={{ pt: 2 }}>
 
 
                 {/* <Typography variant='overline' display='block'>
@@ -172,4 +174,4 @@ export const ComponentCard: React.FC<IComponentCardProps> = (props) => {
 
         </Card>
     );
-}
+};
