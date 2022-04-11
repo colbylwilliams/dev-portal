@@ -47,7 +47,7 @@ ENV PATH ${PATH}:/home/site/wwwroot
 
 WORKDIR /home/site/wwwroot
 
-COPY deploy/tcsite /etc/nginx/sites-available/tcsite
+COPY deploy/msdsite /etc/nginx/sites-available/msdsite
 COPY deploy/nginx.conf /etc/nginx/nginx.conf
 RUN mkdir /etc/nginx/sites-enabled
 
