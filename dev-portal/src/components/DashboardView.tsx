@@ -1,23 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { } from 'react';
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
-import { useTheme } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
+import InputBase from '@mui/material/InputBase';
+import Paper from '@mui/material/Paper';
+import { useTheme } from '@mui/material/styles';
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
+import React from 'react';
 // import { useIssues } from '../hooks/github';
-import { ReactComponent as ContosoLogo } from '../img/contoso_logo.svg'
-import { ReactComponent as ContosoLogoDark } from '../img/contoso_logo_dark.svg'
-import { ToolkitCard } from './msdev/ToolkitCard';
+import { ReactComponent as ContosoLogo } from '../img/contoso_logo.svg';
+import { ReactComponent as ContosoLogoDark } from '../img/contoso_logo_dark.svg';
 import { ProjectsCard } from './msdev/ProjectsCard';
+import { ToolkitCard } from './msdev/ToolkitCard';
 
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
 
 export const Contoso = (props: SvgIconProps) => (
     <SvgIcon {...props}>
@@ -123,4 +122,4 @@ export const DashboardView: React.FC<IDashboardViewProps> = (props) => {
             </Grid>
         </Grid>
     );
-}
+};
