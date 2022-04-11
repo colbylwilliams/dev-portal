@@ -35,12 +35,3 @@ export const ContributorsCard: React.FunctionComponent<IContributorsCardProps> =
         </Card>
     );
 };
-
-{/* <Card>
-    <CardHeader title={
-        <Stack direction='row'>
-            <Typography>
-                Contributors <Chip label="Small" size="small" />
-            </Typography>
-        </Stack>
-    } /> */}

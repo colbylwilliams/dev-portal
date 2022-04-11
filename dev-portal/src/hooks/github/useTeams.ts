@@ -1,20 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { useQuery } from 'react-query'
+import _ from 'lodash';
 import { Octokit } from 'octokit';
+import { useQuery } from 'react-query';
 import { getGitHubToken } from '../../Auth';
 import { TeamFull } from '../../model/github';
-
-import _ from 'lodash';
 
 
 export const useTeams = () => {
 
+    const ghToken = getGitHubToken();
+
     return useQuery(['gh-teams'], async () => {
 
         const octokit = new Octokit({
-            auth: getGitHubToken(),
+            auth: ghToken,
             userAgent: 'TeamCloud'
         });
 
@@ -48,6 +49,6 @@ export const useTeams = () => {
 
         return data as TeamFull[];
     }, {
-        // enabled: isAuthenticated && !!orgId
+        enabled: !!ghToken && !ghToken.startsWith('__')
     });
-}
+};

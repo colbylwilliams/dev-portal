@@ -1,17 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { useQuery } from 'react-query'
 import { Octokit } from 'octokit';
+import { useQuery } from 'react-query';
 import { getGitHubToken } from '../../Auth';
 import { Language } from '../../model/github';
 
 export const useLanguages = (org: string, repo: string) => {
 
+    const ghToken = getGitHubToken();
+
     return useQuery(['gh-org', org, 'gh-repo', repo, 'languages'], async () => {
 
         const octokit = new Octokit({
-            auth: getGitHubToken(),
+            auth: ghToken,
             userAgent: 'TeamCloud'
         });
 
@@ -30,6 +32,6 @@ export const useLanguages = (org: string, repo: string) => {
 
         return data;
     }, {
-        // enabled: isAuthenticated && !!orgId
+        enabled: !!ghToken && !ghToken.startsWith('__')
     });
-}
+};
