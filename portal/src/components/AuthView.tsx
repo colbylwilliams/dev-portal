@@ -18,6 +18,7 @@ export const AuthView: React.FC<IAuthViewProps> = (props) => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [code, setCode] = useState<string>();
+    const [state, setState] = useState<string>();
 
 
 
@@ -26,24 +27,29 @@ export const AuthView: React.FC<IAuthViewProps> = (props) => {
     useEffect(() => {
         if (searchParams) {
             const _code = searchParams.get('code');
+            const _state = searchParams.get('state');
             if (_code) {
                 setCode(_code);
+            }
+            if (_state) {
+                setState(_state);
             }
         }
     }, [searchParams]);
 
     useEffect(() => {
         const doThing = async () => {
-            if (code) {
+            if (code && state) {
                 console.log('code:', code);
-                console.log('code:', JSON.stringify({ code }));
+                console.log('state:', state);
+                console.log(JSON.stringify({ code, state }));
 
                 const response = await fetch('/api/github/oauth/token', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
                     },
-                    body: JSON.stringify({ code }),
+                    body: JSON.stringify({ code, state }),
                 });
 
                 console.log('response:', response);
@@ -52,7 +58,7 @@ export const AuthView: React.FC<IAuthViewProps> = (props) => {
             }
         };
         doThing();
-    }, [code]);
+    }, [code, state]);
 
     // console.warn('AuthView searchParams:', searchParams);
     // console.warn('AuthView searchParams.get code:', searchParams.get('code'));
