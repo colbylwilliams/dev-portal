@@ -38,12 +38,14 @@ export const useIssues = () => {
         //     data.push(...response.data);
         // }
 
-        data.forEach(issue => {
+        const issues = data as Issue[];
+
+        issues.forEach(issue => {
             console.log(issue.title);
         });
         // console.log(data);
 
-        return data as Issue[];
+        return issues;
     }, {
         enabled: !!ghToken && !ghToken.startsWith('__')
     });

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { InteractionType } from '@azure/msal-browser';
-import { AuthenticatedTemplate, MsalAuthenticationResult, useMsalAuthentication } from '@azure/msal-react';
+import { InteractionStatus, InteractionType } from '@azure/msal-browser';
+import { AuthenticatedTemplate, MsalAuthenticationResult, useMsal, useMsalAuthentication } from '@azure/msal-react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -34,12 +34,20 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
 
     const authResult: MsalAuthenticationResult = useMsalAuthentication(InteractionType.Redirect, { scopes: auth.getScopes() });
 
+    const { inProgress } = useMsal();
+
     useEffect(() => {
+        console.info('inprogress:', inProgress);
+
         if (authResult.error) {
+            console.error('authResult.error:', authResult.error);
+        }
+
+        if (authResult.error && inProgress === InteractionStatus.None) {
             console.log('logging in...');
             authResult.login(InteractionType.Redirect, { scopes: auth.getScopes() });
         }
-    }, [authResult]);
+    }, [authResult, inProgress]);
 
 
     // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

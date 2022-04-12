@@ -1,47 +1,76 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { AccessToken, TokenCredential } from '@azure/core-auth';
 import { Configuration, InteractionRequiredAuthError, PublicClientApplication } from '@azure/msal-browser';
-import { AccessToken, TokenCredential } from '@azure/core-auth'
 import { AuthenticationProvider, AuthenticationProviderOptions } from "@microsoft/microsoft-graph-client";
 
 export const getGitHubToken = () => {
-    if (process.env.NODE_ENV !== 'production') {
-        if (!process.env.REACT_APP_GITHUB_TOKEN) throw new Error('Must set env variable $REACT_APP_GITHUB_TOKEN');
-        return process.env.REACT_APP_GITHUB_TOKEN;
-    }
+    const value = process.env.REACT_APP_GITHUB_TOKEN || '__REACT_APP_GITHUB_TOKEN__';
+    if (value.startsWith('__')) throw new Error('Must set env variable $REACT_APP_GITHUB_TOKEN');
+    return value;
 
-    return '__REACT_APP_GITHUB_TOKEN__';
+
+    // if (process.env.NODE_ENV !== 'production') {
+    //     if (!process.env.REACT_APP_GITHUB_TOKEN) throw new Error('Must set env variable $REACT_APP_GITHUB_TOKEN');
+    //     return process.env.REACT_APP_GITHUB_TOKEN;
+    // }
+
+    // return '__REACT_APP_GITHUB_TOKEN__';
 };
+
+
+export class GitHubAuth {
+
+
+    // geToken = async (): Promise<string> => {
+    //     const octocat = new Octokit({
+    //         authStrategy:
+    //     });
+
+
+    // }
+
+}
 
 
 export class Auth implements TokenCredential, AuthenticationProvider {
 
     _getClientId = () => {
-        if (process.env.NODE_ENV !== 'production') {
-            if (!process.env.REACT_APP_MSAL_CLIENT_ID) throw new Error('Must set env variable $REACT_APP_MSAL_CLIENT_ID');
-            return process.env.REACT_APP_MSAL_CLIENT_ID;
-        }
+        const value = process.env.REACT_APP_MSAL_CLIENT_ID || '__REACT_APP_MSAL_CLIENT_ID__';
+        if (value.startsWith('__')) throw new Error('Must set env variable $REACT_APP_MSAL_CLIENT_ID');
+        return value;
+        // if (process.env.NODE_ENV !== 'production') {
+        //     if (!process.env.REACT_APP_MSAL_CLIENT_ID) throw new Error('Must set env variable $REACT_APP_MSAL_CLIENT_ID');
+        //     return process.env.REACT_APP_MSAL_CLIENT_ID;
+        // }
 
-        return '__REACT_APP_MSAL_CLIENT_ID__';
+        // return '__REACT_APP_MSAL_CLIENT_ID__';
     };
 
     _getAuthority = () => {
-        if (process.env.NODE_ENV !== 'production') {
-            if (!process.env.REACT_APP_MSAL_TENANT_ID) throw new Error('Must set env variable $REACT_APP_MSAL_TENANT_ID');
-            return 'https://login.microsoftonline.com/' + process.env.REACT_APP_MSAL_TENANT_ID;
-        }
+        const value = process.env.REACT_APP_MSAL_TENANT_ID || '__REACT_APP_MSAL_TENANT_ID__';
+        if (value.startsWith('__')) throw new Error('Must set env variable $REACT_APP_MSAL_TENANT_ID');
+        return 'https://login.microsoftonline.com/' + value;
+        // if (process.env.NODE_ENV !== 'production') {
+        //     if (!process.env.REACT_APP_MSAL_TENANT_ID) throw new Error('Must set env variable $REACT_APP_MSAL_TENANT_ID');
+        //     return 'https://login.microsoftonline.com/' + process.env.REACT_APP_MSAL_TENANT_ID;
+        // }
 
-        return 'https://login.microsoftonline.com/__REACT_APP_MSAL_TENANT_ID__';
+        // return 'https://login.microsoftonline.com/__REACT_APP_MSAL_TENANT_ID__';
     };
 
     _getScope = () => {
-        if (process.env.NODE_ENV !== 'production') {
-            if (!process.env.REACT_APP_MSAL_SCOPE) throw new Error('Must set env variable REACT_APP_MSAL_SCOPE');
-            return process.env.REACT_APP_MSAL_SCOPE;
-        }
+        const value = process.env.REACT_APP_MSAL_SCOPE || '__REACT_APP_MSAL_SCOPE__';
+        if (value.startsWith('__')) throw new Error('Must set env variable $REACT_APP_MSAL_SCOPE');
+        return value;
 
-        return '__REACT_APP_MSAL_SCOPE__';
+        // if (process.env.NODE_ENV !== 'production') {
+        //     if (!process.env.REACT_APP_MSAL_SCOPE) throw new Error('Must set env variable REACT_APP_MSAL_SCOPE');
+        //     return process.env.REACT_APP_MSAL_SCOPE;
+        // }
+
+        // return '__REACT_APP_MSAL_SCOPE__';
     };
 
     configuration: Configuration = {
@@ -62,7 +91,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
 
     getScopes = (scopes: string | string[] = 'openid', parseScopes: boolean = true): string[] => {
 
-        const oidScope = 'openid'
+        const oidScope = 'openid';
         const hostScope = '{$host}/.default';
         const tcwebScope = this._getScope();// 'http://TeamCloud.Web/user_impersonation';
 
@@ -74,7 +103,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
             const hostIndex = scopes.indexOf(hostScope);
 
             if (hostIndex >= -1)
-                scopes.splice(hostIndex, 1)
+                scopes.splice(hostIndex, 1);
 
             if (!scopes.includes(oidScope))
                 scopes.push(oidScope);
@@ -84,7 +113,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
         }
 
         return scopes;
-    }
+    };
 
     getManagementToken = async (): Promise<AccessToken | null> => {
 
@@ -93,7 +122,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
         const accounts = this.clientApplication.getAllAccounts();
 
         if (accounts.length <= 0) {
-            console.error('nope')
+            console.error('nope');
             return null;
         }
 
@@ -102,7 +131,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
         var authResult = await this.clientApplication.acquireTokenSilent({ account: account, scopes: scopes as string[] });
 
         return { token: authResult.accessToken, expiresOnTimestamp: authResult.expiresOn!.getTime() };
-    }
+    };
 
     getToken = async (scopes: string | string[] = 'openid'): Promise<AccessToken | null> => {
 
@@ -112,7 +141,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
         const accounts = this.clientApplication.getAllAccounts();
 
         if (accounts.length <= 0) {
-            console.error('nope')
+            console.error('nope');
             return null;
         }
         const account = accounts[0];
@@ -135,7 +164,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
 
                 try {
 
-                    await this.clientApplication.acquireTokenRedirect({ account: account, scopes: scopes as string[] })
+                    await this.clientApplication.acquireTokenRedirect({ account: account, scopes: scopes as string[] });
 
                 } catch (err) {
 
@@ -153,18 +182,18 @@ export class Auth implements TokenCredential, AuthenticationProvider {
         }
 
         // console.log('TOKEN (' + (authParameters.scopes || []).join(' | ') + ' | ' + authResponse.expiresOn + ') ' + authResponse.accessToken);
-    }
+    };
 
     getAccessToken = async (authenticationProviderOptions?: AuthenticationProviderOptions): Promise<string> => {
         const graphScopes = ['User.Read', 'User.ReadBasic.All', 'Directory.Read.All', 'People.Read']; // An array of graph scopes
 
         if (authenticationProviderOptions?.scopes)
-            graphScopes.concat(authenticationProviderOptions.scopes)
+            graphScopes.concat(authenticationProviderOptions.scopes);
 
         const token = await this.getToken(graphScopes);
 
         return token?.token ?? Promise.reject('Unable to get token');
-    }
+    };
 
     logout = async (): Promise<void> => this.clientApplication.logout();
 }

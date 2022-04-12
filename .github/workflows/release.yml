@@ -42,7 +42,7 @@ jobs:
           node-version: '16'
 
       - name: Create Release Assets
-        working-directory: ./dev-portal
+        working-directory: ./portal
         run: |
           npm install
           npm run build
@@ -64,8 +64,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./dev-portal
-          file: ./dev-portal/Dockerfile
+          context: ./portal
+          file: ./portal/Dockerfile
           tags: |
             teamcloud.azurecr.io/msdeveloper/portal:${{ steps.gitversion.outputs.majorMinorPatch }}
             teamcloud.azurecr.io/msdeveloper/portal:latest

@@ -5,11 +5,15 @@ import { KnownComponentTaskState, Project } from "teamcloud";
 
 
 export const getVersion = () => {
-    if (process.env.NODE_ENV !== 'production') {
-        return process.env.REACT_APP_VERSION ?? '0.0.0';
-    } else {
-        return '__REACT_APP_VERSION__';
-    }
+    let value = process.env.REACT_APP_VERSION || '__REACT_APP_VERSION__';
+    if (value.startsWith('__')) value = '0.0.0';
+    return value;
+
+    // if (process.env.NODE_ENV !== 'production') {
+    // return process.env.REACT_APP_VERSION ?? '0.0.0';
+    // } else {
+    //     return '__REACT_APP_VERSION__';
+    // }
 };
 
 
@@ -19,7 +23,7 @@ export const matchesLowerCase = (id: string, param: string) =>
 export const matchesAnyLowerCase = (id: string, ...params: string[]) =>
     params.some(p => matchesLowerCase(id, p));
 
-export const matchesRouteParam = (obj: { id: string, slug: string }, param: string) =>
+export const matchesRouteParam = (obj: { id: string, slug: string; }, param: string) =>
     matchesLowerCase(obj.id, param) || matchesLowerCase(obj.slug, param);
 
 export const endsWithLowerCase = (path: string, check: string) =>
@@ -31,13 +35,13 @@ export const endsWithAnyLowerCase = (path: string, ...checks: string[]) =>
 export const includesLowerCase = (path: string, check: string) =>
     (path && check) ? path.toLowerCase().includes(check.toLowerCase()) : false;
 
-export const matchesParent = (list: [{ id: string }], parent: { id: string }) =>
+export const matchesParent = (list: [{ id: string; }], parent: { id: string; }) =>
     list && !list.some(i => i.id !== parent.id);
 
-export const matchesProject = (list: [{ projectId: string }], project: Project) =>
+export const matchesProject = (list: [{ projectId: string; }], project: Project) =>
     list && !list.some(i => i.projectId !== project.id);
 
-export const undefinedOrWrongParent = (list: [{ id: string }], parent: { id: string }) =>
+export const undefinedOrWrongParent = (list: [{ id: string; }], parent: { id: string; }) =>
     list === undefined || list.some(i => i.id !== parent.id);
 
 export const prettyPrintCamlCaseString = (value: string) =>

@@ -1,27 +1,35 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Auth } from './Auth';
 import { ErrorResult, TeamCloud } from 'teamcloud';
+import { Auth } from './Auth';
 // import { HubConnection, HubConnectionBuilder, IHttpConnectionOptions } from '@microsoft/signalr'
 
 const _getApiUrl = () => {
-    if (process.env.NODE_ENV !== 'production') {
-        if (!process.env.REACT_APP_TC_API_URL) throw new Error('Must set env variable $REACT_APP_TC_API_URL');
-        return process.env.REACT_APP_TC_API_URL;
-    }
+    const value = process.env.REACT_APP_TC_API_URL || '__REACT_APP_TC_API_URL__';
+    if (value.startsWith('__')) throw new Error('Must set env variable $REACT_APP_TC_API_URL');
+    return value;
 
-    return "__REACT_APP_TC_API_URL__";
+    // if (process.env.NODE_ENV !== 'production') {
+    //     if (!process.env.REACT_APP_TC_API_URL) throw new Error('Must set env variable $REACT_APP_TC_API_URL');
+    //     return process.env.REACT_APP_TC_API_URL;
+    // }
+
+    // return "__REACT_APP_TC_API_URL__";
 };
 
 
 export const getDevBoxBrowserUrl = () => {
-    if (process.env.NODE_ENV !== 'production') {
-        if (!process.env.REACT_APP_DEV_BOX_CONNECT_URL) throw new Error('Must set env variable $REACT_APP_DEV_BOX_CONNECT_URL');
-        return process.env.REACT_APP_DEV_BOX_CONNECT_URL;
-    }
+    const value = process.env.REACT_APP_DEV_BOX_CONNECT_URL || '__REACT_APP_DEV_BOX_CONNECT_URL__';
+    if (value.startsWith('__')) throw new Error('Must set env variable $REACT_APP_DEV_BOX_CONNECT_URL');
+    return value;
 
-    return "__REACT_APP_DEV_BOX_CONNECT_URL__";
+    // if (process.env.NODE_ENV !== 'production') {
+    //     if (!process.env.REACT_APP_DEV_BOX_CONNECT_URL) throw new Error('Must set env variable $REACT_APP_DEV_BOX_CONNECT_URL');
+    //     return process.env.REACT_APP_DEV_BOX_CONNECT_URL;
+    // }
+
+    // return "__REACT_APP_DEV_BOX_CONNECT_URL__";
 };
 
 
@@ -37,12 +45,12 @@ export const api = new TeamCloud(auth, apiUrl, { credentialScopes: [] });
 
 export const onResponse = (raw: any, flat: unknown) => {
     if (raw.status >= 400) {
-        const error = flat as ErrorResult
+        const error = flat as ErrorResult;
         if (error)
-            throw error
-        throw new Error(raw.parsedBody || raw.bodyAsText || `Error: ${raw.status}`)
+            throw error;
+        throw new Error(raw.parsedBody || raw.bodyAsText || `Error: ${raw.status}`);
     }
-}
+};
 
 // let connection: HubConnection | undefined
 

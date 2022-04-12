@@ -11,6 +11,7 @@ import Code from '@mui/icons-material/Code';
 import Computer from '@mui/icons-material/Computer';
 import Dashboard from '@mui/icons-material/Dashboard';
 import Extension from '@mui/icons-material/Extension';
+import GitHub from '@mui/icons-material/GitHub';
 import Group from '@mui/icons-material/Group';
 import LibraryBooks from '@mui/icons-material/LibraryBooks';
 import Settings from '@mui/icons-material/Settings';
@@ -119,6 +120,20 @@ const MainDrawer: React.FC<IMainDrawerProps> = (props) => {
                     {/* <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.12)' }} /> */}
                     <Divider />
                     <List>
+                        <ListItemButton sx={{ pl: theme.spacing(3) }} onClick={() => fetch('/api/foobar').then(res => res.json()).then(data => console.warn(data))}>
+                            <ListItemIcon sx={{ minWidth: '42px' }}>
+                                <GitHub />
+                            </ListItemIcon>
+                            <ListItemText primary='Fetch' />
+                        </ListItemButton>
+
+                        <ListItemButton component='a' sx={{ pl: theme.spacing(3) }} href='/api/github/oauth/login'>
+                            {/* <ListItemButton component='a' sx={{ pl: theme.spacing(3) }} href='http://localhost:3000/api/foobar'> */}
+                            <ListItemIcon sx={{ minWidth: '42px' }}>
+                                <GitHub />
+                            </ListItemIcon>
+                            <ListItemText primary='GitHub' />
+                        </ListItemButton>
                         <ListItemButton sx={{ pl: theme.spacing(3) }} onClick={() => navigate(`/orgs/contoso/settings`)} selected={pathname === '/orgs/contoso/settings'}>
                             {/* <ListItem button key={item.label} onClick={() => navigate(item.href)}> */}
                             {/* <ListItemIcon sx={{ minWidth: '42px', color: '#fff' }}> */}
