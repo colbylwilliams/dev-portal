@@ -106,5 +106,5 @@ dist
 local/
 .local/
 *.DS_Store
-!dist
+# !dist
 # portal/dist
