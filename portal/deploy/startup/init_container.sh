@@ -15,6 +15,7 @@ pushd /home/site/wwwroot/static/js > /dev/null
     sed -i 's|__REACT_APP_MSAL_TENANT_ID__|'"$REACT_APP_MSAL_TENANT_ID"'|g' "$mainFile"
     sed -i 's|__REACT_APP_MSAL_SCOPE__|'"$REACT_APP_MSAL_SCOPE"'|g' "$mainFile"
     sed -i 's|__REACT_APP_VERSION__|'"$REACT_APP_VERSION"'|g' "$mainFile"
+    sed -i 's|__REACT_APP_DEV_BOX_CONNECT_URL__|'"$REACT_APP_DEV_BOX_CONNECT_URL"'|g' "$mainFile"
 
 popd > /dev/null
 
