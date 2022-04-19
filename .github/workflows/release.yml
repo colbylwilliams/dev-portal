@@ -41,13 +41,16 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Install npm packages
+        working-directory: ./portal
+        run: npm i
+
       - name: Hack Webpack
         run: bash ./tools/hack-webpack.sh
 
-      - name: Create Release Assets
+      - name: Build Release Assets
         working-directory: ./portal
         run: |
-          npm install
           npm run build
 
       - name: Set up QEMU
