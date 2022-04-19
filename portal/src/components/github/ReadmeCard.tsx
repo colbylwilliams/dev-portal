@@ -4,7 +4,7 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
@@ -99,9 +99,9 @@ export const ReadmeCard: React.FC<IReadmeCardProps> = (props) => {
 
     const { data: readme, isLoading } = useReadme(org, repo);
 
-    const theme = useTheme();
+    // const theme = useTheme();
 
-    console.log(theme.palette.info.main);
+    // console.log(theme.palette.info.main);
 
     return (
         // <Box>

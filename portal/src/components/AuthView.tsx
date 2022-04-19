@@ -16,7 +16,8 @@ export const AuthView: React.FC<IAuthViewProps> = (props) => {
     // console.warn('AuthView location:', location);
     // console.warn('AuthView location.search:', location.search);
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const [code, setCode] = useState<string>();
     const [state, setState] = useState<string>();
 

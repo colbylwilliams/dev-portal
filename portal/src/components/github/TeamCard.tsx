@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import AddIcon from '@mui/icons-material/Add';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -51,7 +47,7 @@ export const TeamCard: React.FC<ITeamCardProps> = (props) => {
                 {/* <Typography variant='overline' display='block'>
                     Description
                 </Typography> */}
-                <Typography variant='subtitle2' gutterBottom component='div' minHeight='160px' maxHeight='160px'>
+                <Typography variant='subtitle2' gutterBottom component='div' minHeight='100px' maxHeight='100px'>
                     {/* {team.description?.replace(imageOrLinkRe, '').replace(titleRe, '').replace(deviderRe, '')} */}
                     {/* {getDescription(team.description).truncated} */}
                     {team.description}
@@ -79,43 +75,7 @@ export const TeamCard: React.FC<ITeamCardProps> = (props) => {
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end', paddingBottom: theme.spacing(2) }}>
-                <ButtonGroup color='inherit' variant='outlined'>
-                    <Button startIcon={<AddIcon />}>
-                        {/* <Button variant='contained'> */}
-                        Create...
-                    </Button>
-                    {/* <Button onClick={handlePopoverClick}> */}
-                    <Button >
-                        {/* <ArrowDropDownIcon /> */}
-                        <KeyboardArrowDownIcon />
-                    </Button>
 
-                </ButtonGroup>
-                {/* <Menu
-                    open={menuOpen}
-                    anchorEl={menuAnchorEl}
-                    onClose={handleMenuClose}
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                    transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
-                    <MenuItem onClick={handleMenuClose}>
-                        <LibraryBooksIcon sx={{ marginRight: theme.spacing(1) }} fontSize='medium' color='info' />
-                        View docs
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                        <ManageSearchIcon sx={{ marginRight: theme.spacing(1) }} fontSize='medium' color='info' />
-                        See existing
-                    </MenuItem>
-                </Menu>
-                <Popover
-                    open={popoverOpen}
-                    anchorEl={popoverAnchorEl}
-                    onClose={handlePopoverClose}
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
-                    transformOrigin={{ vertical: 'top', horizontal: 'right', }}>
-                    <Button color='inherit' sx={{ padding: theme.spacing(1, 2) }} startIcon={<LibraryBooksIcon color='info' />}>
-                        View docs
-                    </Button>
-                </Popover> */}
             </CardActions>
 
         </Card>

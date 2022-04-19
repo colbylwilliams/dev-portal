@@ -9,6 +9,8 @@ import { AuthView } from './components/AuthView';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { RootView } from './components/RootView';
 
+// const
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -18,7 +20,6 @@ const queryClient = new QueryClient({
     }
   }
 });
-
 
 // const App = () => {
 // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

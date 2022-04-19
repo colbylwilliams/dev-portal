@@ -17,6 +17,7 @@ import MainAppBar from './MainAppBar';
 import MainDrawer from './MainDrawer';
 import { MainView } from './MainView';
 import { ApiView } from './msdev/ApiView';
+import { ComponentForm } from './msdev/ComponentForm';
 import { ComponentsView } from './msdev/ComponentsView';
 import { DevBoxesView } from './msdev/DevBoxesView';
 import { DocsView } from './msdev/DocsView';
@@ -37,7 +38,7 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
     const { inProgress } = useMsal();
 
     useEffect(() => {
-        console.info('inprogress:', inProgress);
+        // console.info('inprogress:', inProgress);
 
         if (authResult.error) {
             console.error('authResult.error:', authResult.error);
@@ -133,6 +134,12 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
                             } />
                             <Route path='/orgs/:orgId/projects/:projectId/environments' element={
                                 <MainView main title='Environments'><ComponentsView {...{}} /></MainView>
+                            } />
+                            {/* <Route path='/orgs/:orgId/projects/:projectId/new' element={
+                                <MainView main><ComponentForm {...{}} /></MainView>
+                            } /> */}
+                            <Route path='/orgs/:orgId/projects/:projectId/new/:itemId' element={
+                                <MainView main><ComponentForm {...{}} /></MainView>
                             } />
                             <Route path='/orgs/:orgId/settings' element={
                                 <MainView main title='Settings'><SettingsView {...{}} /></MainView>

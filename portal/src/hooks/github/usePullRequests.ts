@@ -3,17 +3,17 @@
 
 import { Octokit } from 'octokit';
 import { useQuery } from 'react-query';
-import { getGitHubToken } from '../../Auth';
 import { Contributor } from '../../model/github';
+import { useToken } from './useToken';
 
 export const usePullRequests = (org: string, repo: string) => {
 
-    const ghToken = getGitHubToken();
+    const { data: token } = useToken();
 
     return useQuery(['gh-org', org, 'gh-prs'], async () => {
 
         const octokit = new Octokit({
-            auth: ghToken,
+            auth: token,
             userAgent: 'TeamCloud'
         });
 
@@ -30,6 +30,6 @@ export const usePullRequests = (org: string, repo: string) => {
 
         return data;
     }, {
-        enabled: !!ghToken && !ghToken.startsWith('__')
+        enabled: !!token
     });
 };

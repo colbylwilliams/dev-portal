@@ -46,7 +46,7 @@ export type Integration = {
         metadata?: string;
         contents?: string;
         deployments?: string;
-    } & { [key: string]: string };
+    } & { [key: string]: string; };
     /** The list of events for the GitHub app */
     events: string[];
     /** The number of installations associated with the GitHub app */
@@ -158,13 +158,13 @@ export type HookDelivery = {
     url?: string;
     request: {
         /** The request headers sent with the webhook delivery. */
-        headers: { [key: string]: unknown } | null;
+        headers: { [key: string]: unknown; } | null;
         /** The webhook payload. */
-        payload: { [key: string]: unknown } | null;
+        payload: { [key: string]: unknown; } | null;
     };
     response: {
         /** The response headers received when the delivery was made. */
-        headers: { [key: string]: unknown } | null;
+        headers: { [key: string]: unknown; } | null;
         /** The response payload received. */
         payload: string | null;
     };
@@ -685,7 +685,7 @@ export type AuthenticationToken = {
     token: string;
     /** The time this token expires */
     expires_at: string;
-    permissions?: { [key: string]: unknown };
+    permissions?: { [key: string]: unknown; };
     /** The repositories this token has access to */
     repositories?: Repository[];
     single_file?: string | null;
@@ -706,7 +706,7 @@ export type AuditLogEvent = {
     actor_location?: {
         country_name?: string;
     };
-    data?: { [key: string]: unknown };
+    data?: { [key: string]: unknown; };
     org_id?: number;
     /** The username of the account being blocked. */
     blocked_user?: string;
@@ -834,7 +834,7 @@ export type NullableIntegration = {
         metadata?: string;
         contents?: string;
         deployments?: string;
-    } & { [key: string]: string };
+    } & { [key: string]: string; };
     /** The list of events for the GitHub app */
     events: string[];
     /** The number of installations associated with the GitHub app */
@@ -1722,7 +1722,7 @@ export type ActionsPublicKey = {
     created_at?: string;
 };
 /** An object without any properties. */
-export type EmptyObject = { [key: string]: unknown };
+export type EmptyObject = { [key: string]: unknown; };
 /** Credential Authorization */
 export type CredentialAuthorization = {
     /** User login that owns the underlying credential. */
@@ -2632,6 +2632,8 @@ export type NullableSimpleCommit = {
 } | null;
 /** An invocation of a workflow */
 export type WorkflowRun = {
+    actor: NullableSimpleUser;
+    triggering_actor: NullableSimpleUser;
     /** The ID of the workflow run. */
     id: number;
     /** The name of the workflow run. */
@@ -2741,7 +2743,7 @@ export type Deployment = {
     ref: string;
     /** Parameter to specify a task to execute */
     task: string;
-    payload: { [key: string]: unknown } | string;
+    payload: { [key: string]: unknown; } | string;
     original_environment?: string;
     /** Name for the target deployment environment. */
     environment: string;
@@ -4720,7 +4722,7 @@ export type DeployKey = {
     read_only: boolean;
 };
 /** Language */
-export type Language = { [key: string]: number };
+export type Language = { [key: string]: number; };
 /** License Content */
 export type LicenseContent = {
     name: string;
@@ -5634,7 +5636,7 @@ export type ScimUser = {
     operations?: {
         op: "add" | "remove" | "replace";
         path?: string;
-        value?: string | { [key: string]: unknown } | unknown[];
+        value?: string | { [key: string]: unknown; } | unknown[];
     }[];
     /** associated groups */
     groups?: {

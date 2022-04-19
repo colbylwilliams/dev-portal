@@ -40,11 +40,6 @@ export const ReleasesCard: React.FC<IReleasesCardProps> = (props) => {
                     {releases.map(release => (
                         <ListItem sx={{ alignItems: 'baseline', justifyContent: 'space-between' }} key={release.id}>
                             <Stack direction='row' spacing={2} alignItems='baseline' justifyContent='space-between'>
-                                {release.published_at && (
-                                    <Typography variant='body2' component='span' color='textSecondary'>
-                                        {new Date(release.published_at).toLocaleDateString()}
-                                    </Typography>
-                                )}
                                 <Link href={release.html_url} color='inherit' target='_blank' rel='noopener noreferrer'
                                     sx={{
                                         textDecoration: 'none',
@@ -57,6 +52,12 @@ export const ReleasesCard: React.FC<IReleasesCardProps> = (props) => {
 
                                 {release.prerelease && (
                                     <Chip color='primary' size='small' label='Pre-release' />
+                                )}
+
+                                {release.published_at && (
+                                    <Typography variant='body2' component='span' color='textSecondary'>
+                                        {new Date(release.published_at).toLocaleDateString()}
+                                    </Typography>
                                 )}
 
                             </Stack>

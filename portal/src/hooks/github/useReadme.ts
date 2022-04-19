@@ -3,17 +3,17 @@
 
 import { Octokit } from 'octokit';
 import { useQuery } from 'react-query';
-import { getGitHubToken } from '../../Auth';
 import { ContentFile } from '../../model/github';
+import { useToken } from './useToken';
 
 export const useReadme = (org: string, repo: string) => {
 
-    const ghToken = getGitHubToken();
+    const { data: token } = useToken();
 
     return useQuery(['gh-org', org, 'gh-repo', repo, 'readme'], async () => {
 
         const { data, status } = await new Octokit({
-            auth: ghToken,
+            auth: token,
             userAgent: 'TeamCloud'
         }).rest.repos.getReadme({
             owner: org,
@@ -25,6 +25,6 @@ export const useReadme = (org: string, repo: string) => {
 
         return data as ContentFile;
     }, {
-        enabled: !!ghToken && !ghToken.startsWith('__')
+        enabled: !!token
     });
 };

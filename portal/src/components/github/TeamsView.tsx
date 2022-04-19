@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import React from 'react';
 import { useTeams } from '../../hooks/github';
+import { SettingsCheck } from '../SettingsCheck';
 import { TeamCard } from './TeamCard';
 
 export interface ITeamsViewProps { }
@@ -20,12 +21,14 @@ export const TeamsView: React.FC<ITeamsViewProps> = (props) => {
         </Box>);
 
     return (
-        <Grid container spacing={3}>
-            {teams?.map(team => (
-                <Grid item xs={12} md={6} lg={4} xl={3} key={team.id}>
-                    <TeamCard team={team} />
-                </Grid>
-            ))}
-        </Grid>
+        <SettingsCheck github>
+            <Grid container spacing={3}>
+                {teams?.map(team => (
+                    <Grid item xs={12} md={6} lg={4} xl={3} key={team.id}>
+                        <TeamCard team={team} />
+                    </Grid>
+                ))}
+            </Grid>
+        </SettingsCheck>
     );
 };

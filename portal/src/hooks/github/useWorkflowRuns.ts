@@ -3,33 +3,41 @@
 
 import { Octokit } from 'octokit';
 import { useQuery } from 'react-query';
-import { getGitHubToken } from '../../Auth';
 import { WorkflowRun } from '../../model/github';
+import { useToken } from './useToken';
 
 export const useWorkflowRuns = (org: string, repo: string) => {
 
-    const ghToken = getGitHubToken();
+    const { data: token } = useToken();
 
     return useQuery(['gh-org', org, 'gh-repo', repo, 'workflow-runs'], async () => {
 
         const octokit = new Octokit({
-            auth: ghToken,
+            auth: token,
             userAgent: 'TeamCloud'
         });
 
-        const data: WorkflowRun[] = [];
-
-        for await (const response of octokit.paginate.iterator(octokit.rest.actions.listWorkflowRunsForRepo, {
+        const response = await octokit.rest.actions.listWorkflowRunsForRepo({
             owner: org,
-            repo: repo
-        })) {
-            data.push(...response.data.workflow_runs);
-        }
+            repo: repo,
+            per_page: 30
+        });
+
+        const data = response.data.workflow_runs as WorkflowRun[];
+
+        // const data: WorkflowRun[] = [];
+
+        // for await (const response of octokit.paginate.iterator(octokit.rest.actions.listWorkflowRunsForRepo, {
+        //     owner: org,
+        //     repo: repo
+        // })) {
+        //     data.push(...response.data.workflow_runs);
+        // }
 
         console.log(data);
 
         return data;
     }, {
-        enabled: !!ghToken && !ghToken.startsWith('__')
+        enabled: !!token
     });
 };

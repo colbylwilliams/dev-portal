@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import RocketLaunch from '@mui/icons-material/RocketLaunch';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -55,7 +55,7 @@ export const ProjectCard: React.FC<IProjectCardProps> = (props) => {
             </CardContent>
             {/* </CardActionArea> */}
             <CardActions sx={{ justifyContent: 'flex-end', paddingBottom: theme.spacing(2) }}>
-                <Button color='inherit' variant='outlined' startIcon={<RocketLaunchIcon />}
+                <Button color='inherit' variant='outlined' startIcon={<RocketLaunch />}
                     onClick={() => navigate(`/orgs/${project.organizationName}/projects/${project.slug}`)}>Open project</Button>
             </CardActions>
         </Card>

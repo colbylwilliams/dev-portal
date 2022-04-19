@@ -3,17 +3,17 @@
 
 import { Octokit } from 'octokit';
 import { useQuery } from 'react-query';
-import { getGitHubToken } from '../../Auth';
 import { User } from '../../model/github';
+import { useToken } from './useToken';
 
 export const useUser = (username?: string) => {
 
-    const ghToken = getGitHubToken();
+    const { data: token } = useToken();
 
     return useQuery(['gh-user', username], async () => {
 
         const { data } = await new Octokit({
-            auth: ghToken,
+            auth: token,
             userAgent: 'TeamCloud'
         }).rest.users.getByUsername({
             username: username!
@@ -23,6 +23,6 @@ export const useUser = (username?: string) => {
 
         return data as User;
     }, {
-        enabled: !!username && !!ghToken && !ghToken.startsWith('__')
+        enabled: !!username && !!token
     });
 };

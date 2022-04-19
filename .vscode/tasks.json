@@ -13,11 +13,9 @@
                 "showReuseMessage": false
             },
             "options": {
-                "cwd": "${workspaceFolder}/dev-portal"
+                "cwd": "${workspaceFolder}/portal"
             },
-            "dependsOn": [
-                // "ngrok: set url"
-            ],
+            "dependsOn": [],
             "problemMatcher": []
         },
         {
@@ -33,9 +31,94 @@
                 "showReuseMessage": false
             },
             "options": {
-                "cwd": "${workspaceFolder}/dev-portal"
+                "cwd": "${workspaceFolder}/portal"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "docker: build push (latest)",
+            "type": "shell",
+            "command": "echo done.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "docker: build",
+                "docker: push (latest)"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "docker: build",
+            "type": "docker-build",
+            "dockerBuild": {
+                "context": "${workspaceFolder}/portal",
+                "dockerfile": "${workspaceFolder}/portal/Dockerfile",
+                "tag": "teamcloud.azurecr.io/${input:imageRepository}/portal:${input:imageTagVersion}",
+                "customOptions": "-t \"teamcloud.azurecr.io/${input:imageRepository}/portal:latest\"",
+                "buildArgs": {
+                    "image_version": "${input:imageTagVersion}"
+                },
+                "labels": {
+                    "includeDefaults": false
+                }
             }
         },
+        {
+            "label": "docker: push",
+            "command": "docker",
             "args": [
+                "push",
+                "teamcloud.azurecr.io/${input:imageRepository}/portal:${input:imageTagVersion}"
+            ],
+            "dependsOn": []
+        },
+        {
+            "label": "docker: push (latest)",
+            "command": "docker",
+            "args": [
+                "push",
+                "teamcloud.azurecr.io/${input:imageRepository}/portal:latest"
+            ],
+            "dependsOn": [
+                "docker: push"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "acr: login",
+            "command": "az",
+            "args": [
+                "acr",
+                "login",
+                "-n",
+                "teamcloud"
+            ],
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "imageRepository",
+            "type": "pickString",
+            "description": "Repository name to push the image.",
+            "default": "msdeveloper",
+            "options": [
+                "msdeveloper",
+                "msdeveloper-dev"
+            ]
+        },
+        {
+            "id": "imageTagVersion",
+            "type": "promptString",
+            "description": "Version for this tag (also builds a latest version).",
+            "default": "0.0.0"
+        },
+        {
+            "id": "imageName",
+            "type": "pickString",
+            "description": "Image name.",
+            "options": [
+                "portal"
+            ]
+        }
     ]
 }

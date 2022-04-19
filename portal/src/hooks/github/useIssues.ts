@@ -3,17 +3,17 @@
 
 import { Octokit } from 'octokit';
 import { useQuery } from 'react-query';
-import { getGitHubToken } from '../../Auth';
 import { Issue } from '../../model/github';
+import { useToken } from './useToken';
 
 export const useIssues = () => {
 
-    const ghToken = getGitHubToken();
+    const { data: token } = useToken();
 
     return useQuery(['gh-issues'], async () => {
 
         const octokit = new Octokit({
-            auth: ghToken,
+            auth: token,
             userAgent: 'TeamCloud'
         });
 
@@ -47,6 +47,6 @@ export const useIssues = () => {
 
         return issues;
     }, {
-        enabled: !!ghToken && !ghToken.startsWith('__')
+        enabled: !!token
     });
 };

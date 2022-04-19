@@ -9,9 +9,11 @@ import { useProject } from '../../hooks/teamcloud';
 import { DefaultDevBoxes, DevBox } from '../../model/msdev/DevBox';
 import { RepoView } from '../github/RepoView';
 import { TeamsView } from '../github/TeamsView';
+import { WorkflowRunsList } from '../github/WorkflowRunsList';
 import { MainView } from '../MainView';
 import { ComponentsView } from './ComponentsView';
 import { DevBoxesView } from './DevBoxesView';
+import { ProjectOverview } from './ProjectOverview';
 
 export interface IProjectViewProps {
 
@@ -72,10 +74,10 @@ export const ProjectView: React.FC<IProjectViewProps> = (props) => {
                 <Tab value='Team' label='Team' />
             </Tabs>
             <TabPanel value={value} index={'Overview'}>
-
+                {project && <ProjectOverview org='msft-developer' repo={project.slug} />}
             </TabPanel>
             <TabPanel value={value} index={'Source Code'} >
-                <RepoView org='microsoft' repo='TeamCloud' />
+                {project && <RepoView org='msft-developer' repo={project.slug} />}
             </TabPanel>
             <TabPanel value={value} index={'Dev Boxes'} >
                 <DevBoxesView devboxes={devboxes} />
@@ -83,7 +85,10 @@ export const ProjectView: React.FC<IProjectViewProps> = (props) => {
             <TabPanel value={value} index={'Environments'} >
                 <ComponentsView />
             </TabPanel>
-            <TabPanel value={value} index={'Workflows'} />
+            <TabPanel value={value} index={'Workflows'}>
+                {/* {project && <WorkflowRunsList org='msft-developer' repo={project.slug} />} */}
+                <WorkflowRunsList org='microsoft' repo='TeamCloud' />
+            </TabPanel>
             <TabPanel value={value} index={'Team'} >
                 <TeamsView />
             </TabPanel>

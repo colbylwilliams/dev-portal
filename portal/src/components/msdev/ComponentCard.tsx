@@ -26,10 +26,9 @@ import { useTheme } from '@mui/material/styles';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ComponentTemplate } from 'teamcloud';
 import { ReactComponent as AzureLogo } from '../../img/azure.svg';
-
-
 
 
 const titleRe = /^(?:#+.*)$/gm;
@@ -59,6 +58,8 @@ export const ComponentCard: React.FC<IComponentCardProps> = (props) => {
     const { template } = props;
 
     const theme = useTheme();
+
+    const navigate = useNavigate();
 
     const [menuAnchorEl, setMenuAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [popoverAnchorEl, setPopoverAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -135,7 +136,7 @@ export const ComponentCard: React.FC<IComponentCardProps> = (props) => {
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end', paddingBottom: theme.spacing(2) }}>
                 <ButtonGroup color='inherit' variant='outlined'>
-                    <Button startIcon={<AddIcon />}>
+                    <Button onClick={() => navigate(`/orgs/${template.organizationName}/projects/project-alpha/new/${template.id}`)} startIcon={<AddIcon />}>
                         {/* <Button variant='contained'> */}
                         Create...
                     </Button>

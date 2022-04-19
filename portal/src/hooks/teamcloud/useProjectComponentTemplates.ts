@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { useQuery } from 'react-query'
 import { useIsAuthenticated } from '@azure/msal-react';
-import { api, onResponse } from '../../API';
+import { useQuery } from 'react-query';
 import { useProject } from '.';
+import { api, onResponse } from '../../API';
 
 export const useProjectComponentTemplates = () => {
 
@@ -22,4 +22,21 @@ export const useProjectComponentTemplates = () => {
     }, {
         enabled: isAuthenticated && !!project?.id
     });
-}
+};
+
+
+export const useComponentTemplatesForProject = (org: string, project: string) => {
+
+    const isAuthenticated = useIsAuthenticated();
+
+    return useQuery(['org', org, 'project', project, 'componenttemplate'], async () => {
+
+        const { data } = await api.getComponentTemplates(org, project, {
+            onResponse: onResponse
+        });
+
+        return data;
+    }, {
+        enabled: isAuthenticated && !!org && !!project
+    });
+};

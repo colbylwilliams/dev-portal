@@ -4,18 +4,18 @@
 import _ from 'lodash';
 import { Octokit } from 'octokit';
 import { useQuery } from 'react-query';
-import { getGitHubToken } from '../../Auth';
 import { TeamFull } from '../../model/github';
+import { useToken } from './useToken';
 
 
 export const useTeams = () => {
 
-    const ghToken = getGitHubToken();
+    const { data: token } = useToken();
 
     return useQuery(['gh-teams'], async () => {
 
         const octokit = new Octokit({
-            auth: ghToken,
+            auth: token,
             userAgent: 'TeamCloud'
         });
 
@@ -49,6 +49,6 @@ export const useTeams = () => {
 
         return data as TeamFull[];
     }, {
-        enabled: !!ghToken && !ghToken.startsWith('__')
+        enabled: !!token
     });
 };

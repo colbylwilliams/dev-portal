@@ -91,12 +91,27 @@ const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
         setPopoverAnchorEl(null);
     };
 
+    const getSizeBox = () => {
+        if (process.env.NODE_ENV !== 'production') {
+            return (<>
+                <Box display={{ xs: 'block', sm: 'none' }}>xs</Box>
+                <Box display={{ xs: 'none', sm: 'block', md: 'none' }}>sm</Box>
+                <Box display={{ xs: 'none', md: 'block', lg: 'none' }}>md</Box>
+                <Box display={{ xs: 'none', lg: 'block', xl: 'none' }}>lg</Box>
+                <Box display={{ xs: 'none', xl: 'block' }}>xl</Box>
+            </>);
+        }
+        return <></>;
+    };
+
     return (
         // <AppBar position='fixed' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <AppBar
             position="fixed"
             sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}>
-            <Toolbar disableGutters sx={{ paddingLeft: '14px', paddingRight: '14px' }}>
+            <Toolbar disableGutters sx={{ pl: '14px', pr: '14px' }}>
+
+                {getSizeBox()}
 
                 {/* <ContosoLogo height='36px' width='172px' style={{ width: 'inherit', height: 'inherit' }} /> */}
 
