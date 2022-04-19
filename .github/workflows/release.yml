@@ -41,6 +41,9 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Hack Webpack
+        run: bash ./tools/hack-webpack.sh
+
       - name: Create Release Assets
         working-directory: ./portal
         run: |
