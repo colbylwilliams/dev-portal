@@ -30,7 +30,7 @@ export const SettingsCheck: React.FC<ISettingsCheckProps> = (props) => {
                     This page requires a GitHub token.
                 </Typography>
                 <Button variant='text' startIcon={<OpenInNew />}
-                    onClick={() => navigate(`/orgs/contoso/projects/settings`)}>Open settings</Button>
+                    onClick={() => navigate(`/orgs/contoso/settings`)}>Open settings</Button>
             </Stack>
         </Box>
     ) : <>{props.children}</>;
